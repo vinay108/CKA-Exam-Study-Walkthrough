@@ -49,3 +49,14 @@ List the following componenets
 
 - ETCD in HA Enviroment, can have multiple ETCD in a Cluster. 
 
+
+Kube-API Server:
+
+- Primary mgmt component in Kubernetes
+
+1. When you run a Kubectl command it reaches the Kube-API Server. The Kube-API Server first validates the request.
+2. The Kube-API retrieves the data from the ETCD Cluster and responds back. 
+3. Or you can simply run a post request. 
+
+The Kube-Scheduler continously monitors the API Server and if a new pod with no node assigned to it, the schedulre identifies a node to put the pod on-to
+and communicats that back to the API Server. tje API Server updates the information in the ETCD Cluster. The API Server then passes information to the Kubelet to create the pod on the new node, the kublet instructs the container runtime to deploy the image, The Kubelet then updates the API-Server and then the ETCD Is updates the API-Server. 
