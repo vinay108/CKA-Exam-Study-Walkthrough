@@ -1,11 +1,13 @@
 Cluster Architecture:
 
 Kubernetes Master:
-ETCD: Stores cluster information and state
+- Master node has a list of control plan componenets. 
+ETCD: Stores cluster information and state, the ETCD is a key and value store. 
+
 API Server: Responsible for all orchastration operations with the cluster. 
 - Exposing Kube-API/Mgmt
 - Monitors state of Cluster
-- Gives work to worer nodes
+- Gives work to worker nodes
 - 
 Controller Manager:
 Kube Scheduler:
