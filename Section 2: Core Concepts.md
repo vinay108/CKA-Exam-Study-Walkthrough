@@ -25,3 +25,27 @@ Kubelet: Agents run on each node of the cluser, responsible for liasing with the
 Kube-Proxy: Ensures network rules are in place, rules are in place to reach services within the cluster. 
 
 Container Runtime: Software which runs the conainerised application. 
+
+ETCD For Beginners:
+
+- ETCD is a Key Value store
+- Used to store and restore 
+
+ETCD In Kubernetes:
+
+List the following componenets
+- Nodes
+- Pods
+- Configs
+- Secrets
+- Accounts
+- Roles
+- Bindings
+- Others
+
+- All information is updated on the ETCD Cluster
+
+- Uses port 2379
+
+- ETCD in HA Enviroment, can have multiple ETCD in a Cluster. 
+
