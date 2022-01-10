@@ -9,7 +9,7 @@ API Server: Responsible for all orchastration operations with the cluster.
 - Exposing Kube-API/Mgmt
 - Monitors state of Cluster
 - Gives work to worker nodes
-- 
+
 Controller Manager:
 Node-controller = Takes care of nodes, onboarding new nodes to cluster and handling situation where nodes become unavailable and gets destroyed. 
 Replication-Controller = Ensures rights ammounts of containers are running at all times in replication group. 
@@ -18,6 +18,9 @@ Kube Scheduler: Identfies the right node to plane the container based on contain
 
 
 Worker nodes:
-Kubelet:
-Kube-Proxy:
-Container Runtime:
+
+Kubelet: Agents run on each node of the cluser, responsible for liasing with the master node (api-server), sending reports back to master on status of cluster etc. The API -Server Periodically fetches status reports from the kubelet.
+
+Kube-Proxy: Ensures network rules are in place, rules are in place to reach services within the cluster. 
+
+Container Runtime: Software which runs the conainerised application. 
