@@ -12,6 +12,7 @@ API Server: Responsible for all orchastration operations with the cluster.
 
 Controller Manager:
 Node-controller = Takes care of nodes, onboarding new nodes to cluster and handling situation where nodes become unavailable and gets destroyed. 
+
 Replication-Controller = Ensures rights ammounts of containers are running at all times in replication group. 
 
 Kube Scheduler: Identfies the right node to plane the container based on container resource requirements, resource requirements, taints and tolerations etc. 
