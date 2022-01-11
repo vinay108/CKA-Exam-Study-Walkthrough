@@ -60,3 +60,12 @@ Kube-API Server:
 
 The Kube-Scheduler continously monitors the API Server and if a new pod with no node assigned to it, the schedulre identifies a node to put the pod on-to
 and communicats that back to the API Server. tje API Server updates the information in the ETCD Cluster. The API Server then passes information to the Kubelet to create the pod on the new node, the kublet instructs the container runtime to deploy the image, The Kubelet then updates the API-Server and then the ETCD Is updates the API-Server. 
+
+Kube-Api Server: Does the following,
+
+- Authenticates users
+- Validates request
+- Retrieves data
+- Updates ETCD
+- Scheduler
+- Kubelet
