@@ -69,3 +69,27 @@ Kube-Api Server: Does the following,
 - Updates ETCD
 - Scheduler
 - Kubelet
+
+Kube-Controller Manager:
+
+Node-Controller:
+
+- Checks status on nodes every 5 sec
+- waits 40 sec before marking down as unreachable
+- POD Eviction 5 min
+
+
+Kube-Scheduler:
+
+- Right containers ends in right node
+- Kube-Scheduler looks at resource contraints etc to determine which node the pod goes to.
+- It will filter out the nodes which are not relevent to the specific node
+- It then calculates if the nodes left are tie, it will rank them based on up-to 10, it will look how resources will be free after pod is placed on it. 
+
+
+Kubelet:
+
+- Load / Unload containers 
+- Captain of the ship (Worker nodes)
+- Send back report to API-Server 
+- Tells Container run-time engine to docker to pull the required image
