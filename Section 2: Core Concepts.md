@@ -93,3 +93,4 @@ Kubelet:
 - Captain of the ship (Worker nodes)
 - Send back report to API-Server 
 - Tells Container run-time engine to docker to pull the required image
+
