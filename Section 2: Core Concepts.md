@@ -94,3 +94,22 @@ Kubelet:
 - Send back report to API-Server 
 - Tells Container run-time engine to docker to pull the required image
 
+
+Kube-Proxy:
+
+- By default every pod in a cluster can reach another pod 
+- Pod can reahc another pod based on its IP by networking
+- creating a service to expose the service 
+- Service has an ip assigned 
+- when a pod tries to reach the service it forward traffic to backend pod through the pod
+- Kube-Proxy is a process that runs on each node, looks for new services 
+- creates appropiate rules when new services come in 
+- creates ip tables rules on each node to forward traffic to the new service
+
+
+POD Recap:
+
+- Pods are the smallest objects which run on nodes, single instance of an application
+- Can have multiple containers in a pod however not really good practice
+- can have helped containers in the same pod or part of it. 
+- If destroying container will also destroy same helper container
