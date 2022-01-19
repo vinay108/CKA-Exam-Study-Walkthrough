@@ -113,3 +113,13 @@ POD Recap:
 - Can have multiple containers in a pod however not really good practice
 - can have helped containers in the same pod or part of it. 
 - If destroying container will also destroy same helper container
+
+
+Pods with YAML:
+
+Pod yml files always contain the following field, this is mandatory:
+
+- apiVersion: version of k8s api used to create the object, must use the correct version for now using v1
+- Kind: type of object for example pod, replica set, service etc
+- Metadata: data about the object, names, labels etc.
+- Spec: depending on the object additional information abouyt the object, spec is a dictionary 
