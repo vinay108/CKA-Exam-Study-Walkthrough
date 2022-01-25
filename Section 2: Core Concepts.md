@@ -123,3 +123,19 @@ Pod yml files always contain the following field, this is mandatory:
 - Kind: type of object for example pod, replica set, service etc
 - Metadata: data about the object, names, labels etc.
 - Spec: depending on the object additional information abouyt the object, spec is a dictionary 
+
+Practice test:
+
+How to check default pods:
+kubectl get pods -n default
+
+how to create new nginx pod:
+kubectl create nginx --image=nginx
+
+How to check which image is running on pod?
+kubectl desribe pods -n default xxxx 
+
+which node is the pods placed on?
+this will tell you via the describe pods commands, you than type in kubectl get nodes 
+
+
