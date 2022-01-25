@@ -138,4 +138,45 @@ kubectl desribe pods -n default xxxx
 which node is the pods placed on?
 this will tell you via the describe pods commands, you than type in kubectl get nodes 
 
+how many containers are running inside that pod?
+describe command again however there maybe an easier command?
+
+What images are used in the new webapp pod?
+again describe command
+
+What is the state of the container agentx in the pod webapp?
+again describe command
+
+Why do you think the container agentx in pod webapp is in error?
+in describe by checking events 
+
+What does the READY column in the output of the kubectl get pods command indicate?
+Answer: Running Containers in POD/Total Containers in POD
+  
+Delete the webapp Pod.
+kubectl delete pods -n default webapp
+
+Create a new pod with the name redis and with the image redis123
+1.  kubectl run redis --image=redis123 --dry-run=client -o yaml > redis-definition.yaml
+2.  kubectl create -f redis-definition.yaml
+3.  kubectl get pods
+
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: redis
+  name: redis
+spec:
+  containers:
+  - image: redis
+    name: redis
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+  
+
+
 
