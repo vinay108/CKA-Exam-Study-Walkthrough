@@ -130,7 +130,7 @@ How to check default pods:
 kubectl get pods -n default
 
 how to create new nginx pod:
-kubectl create nginx --image=nginx
+kubectl run nginx --image=nginx
 
 How to check which image is running on pod?
 kubectl desribe pods -n default xxxx 
