@@ -265,7 +265,8 @@ Labels and Selectors:
 - Delete any one of the 4 PODs. = kubectl delete  pods -n default  new-replica-set-jf7jv
 - How many PODs exist now? = kubectl get pods -n default still 4 as replicaset
 - Why are there still 4 PODs, even after you deleted one? = ReplicaSet ensures that desired number of PODs always run
-- Create a ReplicaSet using the replicaset-definition-1.yaml file located at /root/. There is an issue with the file, so try to fix it.
+- Create a ReplicaSet using the replicaset-definition-1.yaml file located at /root/. There is an issue with the file, so try to fix it. Missing apps/v1, need to do this also kubectl create -f replicaset-definition-1.yaml
+- Fix the issue in the replicaset-definition-2.yaml file and create a ReplicaSet using it. the matchlabel should match with labels under spec
 
 
  
