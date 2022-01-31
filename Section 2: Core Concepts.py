@@ -189,7 +189,8 @@ Replication controller:
 - replications controller can span on different nodes 
 - replication controller vs replica set, replication controller is the old technology and it is being replaced by replicaset. 
 - When creating a replicaset.yml, this is the layout:
-  
+- Under the spec field, all the pods yml config in which you are tring to replicacate goes in there. 
+ 
   apiVersion: v1 
   kind: ReplicationController
   metadata: 
