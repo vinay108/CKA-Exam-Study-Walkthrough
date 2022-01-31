@@ -238,7 +238,10 @@ spec:
       image: nginx
 
 replcas: 3
-selector:   #specifies what pods come under it, can also manage pods which were not created part of the replication configuraiton for example, pods created before -
+selector: 
+   matchLabels:
+      type: front-end
+ #specifies what pods come under it, can also manage pods which were not created part of the replication configuraiton for example, pods created before -
  # the creation of replica set matched label for selector, main differences between replication controller. 
    
 
