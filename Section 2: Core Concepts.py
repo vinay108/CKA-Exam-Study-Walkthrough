@@ -244,7 +244,14 @@ selector:
  #specifies what pods come under it, can also manage pods which were not created part of the replication configuraiton for example, pods created before -
  # the creation of replica set matched label for selector, main differences between replication controller. 
    
-
+Labels and Selectors:
+  
+- for example If we deploy 3 instances of our front end app as 3 pods, we like to create replication-controllers/replicasets
+- replicset monitor pods and if they fail, it will deploy new ones
+- it knows how to monitor pods via labelling as labels are referenced for the pods. 
+- can use the kubectl replace -f replicaset-definition.yml command to update what was done. 
+- or can also run this commanmd as imperitive
+           - kubectl scale --replica=6 -f replicaset-definition.yml
 
 
 
