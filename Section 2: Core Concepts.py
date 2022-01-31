@@ -177,6 +177,40 @@ spec:
   restartPolicy: Always
 status: {}
   
+Replicasets:
+  
+Replication controller:
+  
+- If you have a single pod which crashed, to prevent users from loosing access their application we can create a replica set of the pod.
+- Runs multiple instances of the pod
+- ensures specifies ammount of pods are running at time
+- to create multiple pods to share load it allows this. 
+- if numbers of users increase you can increase pods, deploy additional pods on other nodes. 
+- replications controller can span on different nodes 
+- replication controller vs replica set, replication controller is the old technology and it is being replaced by replicaset. 
+- When creating a replicaset.yml, this is the layout:
+  
+  apiVersion: v1 
+  kind: ReplicationController
+  metadata: 
+    name: myapp-rc
+    labels:
+        app: myapp
+        type: front-end
+spec:
+  template:
+    metadata:
+      name: myapp-pod
+      labels:
+          app: myapp
+          type: front-end
+  spec:
+    containers:
+    - name: nginx-containers
+      image: nginx
+         
+
+
 
 
 
