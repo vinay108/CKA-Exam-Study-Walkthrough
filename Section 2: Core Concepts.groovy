@@ -253,6 +253,22 @@ Labels and Selectors:
 - or can also run this commanmd as imperitive
            - kubectl scale --replica=6 -f replicaset-definition.yml
 
+  Replica-set practice test:
+    
+ -How many PODs exist on the system? 0
+- How many ReplicaSets exist on the system? kubectl get replicasets -n default 0
+- How about now? How many ReplicaSets do you see? kubectl get replicasets -n default 1
+- How many PODs are DESIRED in the new-replica-set? kubectl get replicasets -n default 4
+- What is the image used to create the pods in the new-replica-set? kubectl describe  replicasets -n default new-replica-set Image: busybox777
+- How many PODs are READY in the new-replica-set? 0
+- Why do you think the PODs are not ready? kubectl describe  pods -n default  new-replica-set-jf7jv = kubectl describe  pods -n default  new-replica-set-jf7jv Image does not exist
+- Delete any one of the 4 PODs. = kubectl delete  pods -n default  new-replica-set-jf7jv
+- How many PODs exist now? = kubectl get pods -n default still 4 as replicaset
+- Why are there still 4 PODs, even after you deleted one? = ReplicaSet ensures that desired number of PODs always run
+- Create a ReplicaSet using the replicaset-definition-1.yaml file located at /root/. There is an issue with the file, so try to fix it.
+
+
+ 
 
 
 
