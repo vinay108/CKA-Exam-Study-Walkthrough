@@ -209,7 +209,38 @@ spec:
     containers:
     - name: nginx-containers
       image: nginx
-         
+
+replcas: 3
+  
+- kubectl create -f rc-definition.yml 
+- kubectl get replicationcontroller
+- kubectl get pods 
+
+Replica-sets:
+  
+  apiVersion: apps/v1 
+  kind: ReplicationController
+  metadata: 
+    name: myapp-rc
+    labels:
+        app: myapp
+        type: front-end
+spec:
+  template:
+    metadata:
+      name: myapp-pod
+      labels:
+          app: myapp
+          type: front-end
+  spec:
+    containers:
+    - name: nginx-containers
+      image: nginx
+
+replcas: 3
+selector:   #specifies what pods come under it, can also manage pods which were not created part of the replication configuraiton for example, pods created before -
+ # the creation of replica set matched label for selector, main differences between replication controller. 
+   
 
 
 
