@@ -269,7 +269,8 @@ Labels and Selectors:
 - Fix the issue in the replicaset-definition-2.yaml file and create a ReplicaSet using it. the matchlabel should match with labels under spec
 - Delete the two newly created ReplicaSets - replicaset-1 and replicaset-2 = kubectl delete replicasets -n default replicaset-1
 - Fix the original replica set new-replica-set to use the correct busybox image = kubectl edit replicaset -n default new-replica-set followed by deleting the pods and allowing it to recreate.
-- Scale the ReplicaSet to 5 PODs. Use kubectl scale command or edit the replicaset using kubectl edit replicaset. kubectl edit replicaset -n default new-replica-set, delete pods and let it start recreate agaib
+- Scale the ReplicaSet to 5 PODs. Use kubectl scale command or edit the replicaset using kubectl edit replicaset. kubectl edit replicaset -n default new-replica-set, delete pods and let it start recreate again
+  kubectl scale --replica=6 -f new-replica-set
 
   
 
