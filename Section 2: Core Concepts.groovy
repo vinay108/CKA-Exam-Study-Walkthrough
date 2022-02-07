@@ -272,8 +272,69 @@ Labels and Selectors:
 - Scale the ReplicaSet to 5 PODs. Use kubectl scale command or edit the replicaset using kubectl edit replicaset. kubectl edit replicaset -n default new-replica-set, delete pods and let it start recreate again
   kubectl scale rs new-replica-set --replicas=5
   
+Kubernetes deployments:
+  
+- When upgrading kubernetes cluster, you dont do it all in one go however you do it one by one. 
+- known as rolling updates
+- should be able to roll back changes also
+- deployments work higher, provides upgrading underlying instances seemlessly 
+- the kubectl deployment automatically creates a replica set
+- kubectl get all 
 
+Create an NGINX Pod
+
+kubectl run nginx --image=nginx
+
+Generate POD Manifest YAML file (-o yaml). Don't create it(--dry-run)
+
+kubectl run nginx --image=nginx --dry-run=client -o yaml
+
+Create a deployment
+
+kubectl create deployment --image=nginx nginx
+
+Generate Deployment YAML file (-o yaml). Don't create it(--dry-run)
+
+kubectl create deployment --image=nginx nginx --dry-run=client -o yaml
+
+Generate Deployment YAML file (-o yaml). Don't create it(--dry-run) with 4 Replicas (--replicas=4)
+
+kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > nginx-deployment.yaml
+
+Save it to a file, make necessary changes to the file (for example, adding more replicas) and then create the deployment.
+
+kubectl create -f nginx-deployment.yaml
+
+OR
+
+In k8s version 1.19+, we can specify the --replicas option to create a deployment with 4 replicas.
+
+kubectl create deployment --image=nginx nginx --replicas=4 --dry-run=client -o yaml > nginx-deployment.yaml
  
+Creating a deployment yml
 
+  apiVersion: apps/v1 
+  kind: Deployment
+  metadata: 
+    name: myapp-deployment
+    labels:
+        app: myapp
+        type: front-end
+spec:
+  template:
+    metadata:
+      name: myapp-pod
+      labels:
+          app: myapp
+          type: front-end
+  spec:
+    containers:
+    - name: nginx-containers
+      image: nginx
+
+replcas: 3
+selector: 
+   matchLabels:
+      type: front-end
 
 
