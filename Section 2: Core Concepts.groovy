@@ -350,5 +350,19 @@ Deployments test: Lab 3
 - Why do you think the deployment is not ready? image doesnt exist
 - Create a new Deployment using the deployment-definition-1.yaml file located at /root/ kubectl create -f deployment-definition-1.yaml, need to edit kind field: should mention capital D in Deployment.
 - Create a new Deployment with the below attributes using your own deployment definition file: kubectl create deployment httpd-frontend --image=httpd:2.4-alpine --replicas=3 --dry-run=client -o yaml > image-deployment.yml
-kubectl create -f image-deployment.yml
-- 
+  kubectl create -f image-deployment.yml
+
+Namespaces:
+  
+- By default namespaces are isoloated location for enviroments, 
+- services can reach other services in their own namespace
+- services can reach other services in other namespaces however need to use the append the name of the namespace with service.
+- kubectl create -f abc.yml -n xxxx
+- can also specify a namespace in the yml file
+- kubectl create namesapce xxxx
+- by default you are placed in the default namesapce, to change this namespace from default, simply do this. 
+  Kubectl config set-context current-context --namespace 
+- you can limit resource quota in a namespace, create a resource quota simple. 
+  
+  
+  
