@@ -370,5 +370,8 @@ Namespaces:
  - How many pods exist in the research namespace? 2 kubectl get pods -n research
  - Create a POD in the finance namespace. kubectl run redis --image=redis -n finance
  - Which namespace has the blue pod in it? kubectl get pods --all-namespaces -o wide = marketing namespace 
- -
- -
+ - What DNS name should the Blue application use to access the database db-service in its own namespace - marketing.
+   You can try it in the web application UI. Use port 6379. = 
+ - What DNS name should the Blue application use to access the database 'db-service' in the 'dev' namespace = db-service as its in the same namespace.
+   You can try it in the web application UI. Use port 6379. = db-service = db-service.dev.svc.cluster.local
+   Since the blue application and the db-service are in different namespaces in this case, we need to use the service name along with the namespace to access the database. The FQDN (fully Qualified Domain Name) for the db-service in this example would be db-service.dev.svc.cluster.local.
