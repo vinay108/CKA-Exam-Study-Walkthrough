@@ -368,7 +368,30 @@ Namespaces:
   
  - How many Namespaces exist on the system? 10 kubectl get namespace
  - How many pods exist in the research namespace? 2 kubectl get pods -n research
- - Create a POD in the finance namespace. kubectl run redis --image=redis -n finance
+ - Create a POD in the finance namespace. kubectl run redis --image=redis -n finance or ...
+   
+   apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: redis
+  name: redis
+  namespace: finance <<<<-----------------------Added this namespace. 
+spec:
+  containers:
+  - image: redis
+    name: redis
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+   
+   
+   
+   
+   
+   
  - Which namespace has the blue pod in it? kubectl get pods --all-namespaces -o wide = marketing namespace 
  - What DNS name should the Blue application use to access the database db-service in its own namespace - marketing.
    You can try it in the web application UI. Use port 6379. = 
