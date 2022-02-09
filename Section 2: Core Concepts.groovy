@@ -364,5 +364,11 @@ Namespaces:
   Kubectl config set-context current-context --namespace 
 - you can limit resource quota in a namespace, create a resource quota simple. 
   
+  Namespace test:
   
-  
+ - How many Namespaces exist on the system? 10 kubectl get namespace
+ - How many pods exist in the research namespace? 2 kubectl get pods -n research
+ - Create a POD in the finance namespace. kubectl run redis --image=redis -n finance
+ - Which namespace has the blue pod in it? kubectl get pods --all-namespaces -o wide = marketing namespace 
+ -
+ -
