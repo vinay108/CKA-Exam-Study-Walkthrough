@@ -387,11 +387,6 @@ spec:
   restartPolicy: Always
 status: {}
    
-   
-   
-   
-   
-   
  - Which namespace has the blue pod in it? kubectl get pods --all-namespaces -o wide = marketing namespace 
  - What DNS name should the Blue application use to access the database db-service in its own namespace - marketing.
    You can try it in the web application UI. Use port 6379. = 
