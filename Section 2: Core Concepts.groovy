@@ -393,3 +393,27 @@ status: {}
  - What DNS name should the Blue application use to access the database 'db-service' in the 'dev' namespace = db-service as its in the same namespace.
    You can try it in the web application UI. Use port 6379. = db-service = db-service.dev.svc.cluster.local
    Since the blue application and the db-service are in different namespaces in this case, we need to use the service name along with the namespace to access the database. The FQDN (fully Qualified Domain Name) for the db-service in this example would be db-service.dev.svc.cluster.local.
+
+ Kuberetes Services:
+     
+ - Enable communication from outside
+ - provide customers with connectivity 
+ - different types of services:
+      - Node-Port: Listens to services on the node and forward requests to the pods
+      - Cluster-ip: services creates virtual ip to create communication between different services. 
+      - Load balancer: distribute load 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
