@@ -370,7 +370,7 @@ Namespaces:
  - How many pods exist in the research namespace? 2 kubectl get pods -n research
  - Create a POD in the finance namespace. kubectl run redis --image=redis -n finance or ...
    
-   apiVersion: v1
+apiVersion: v1
 kind: Pod
 metadata:
   creationTimestamp: null
@@ -403,8 +403,20 @@ status: {}
       - Cluster-ip: services creates virtual ip to create communication between different services. 
       - Load balancer: distribute load 
 
+apiVersion: v1
+kind: service
+metadata:
+  name: myapp-service
 
-
+spec:
+  type: NodePort
+  ports:
+    - targetPort: 80
+      port: 80
+      nodePort: 30008
+  selector:
+      app: myapp
+      type: front-end
 
 
 
