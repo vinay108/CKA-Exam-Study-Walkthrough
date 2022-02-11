@@ -399,7 +399,7 @@ status: {}
  - Enable communication from outside
  - provide customers with connectivity 
  - different types of services:
-      - Node-Port: Listens to services on the node and forward requests to the pods
+      - Node-Port: Listens to services on the node and forward requests to the pods: it checks this by looking at the labels of the pod to forward to 
       - Cluster-ip: services creates virtual ip to create communication between different services. 
       - Load balancer: distribute load 
 
