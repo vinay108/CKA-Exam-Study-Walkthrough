@@ -529,13 +529,9 @@ Generate Deployment YAML file (-o yaml). Don't create it(--dry-run)
 
 kubectl create deployment --image=nginx nginx --dry-run=client -o yaml
 
-
-
 Generate Deployment with 4 Replicas
 
 kubectl create deployment nginx --image=nginx --replicas=4
-
-
 
 You can also scale a deployment using the kubectl scale command.
 
@@ -558,8 +554,6 @@ Or
 
 kubectl create service clusterip redis --tcp=6379:6379 --dry-run=client -o yaml (This will not use the pods labels as selectors, instead it will assume selectors as app=redis. You cannot pass in selectors as an option. So it does not work very well if your pod has a different label set. So generate the file and modify the selectors before creating the service)
 
-
-
 Create a Service named nginx of type NodePort to expose pod nginx's port 80 on port 30080 on the nodes:
 
 kubectl expose pod nginx --type=NodePort --port=80 --name=nginx-service --dry-run=client -o yaml
@@ -572,4 +566,24 @@ kubectl create service nodeport nginx --tcp=80:80 --node-port=30080 --dry-run=cl
 
 (This will not use the pods labels as selectors)
 
-Both the above commands have their own challenges. While one of it cannot accept a selector the other cannot accept a node port. I would recommend going with the kubectl expose command. If you need to specify a node port, generate a definition file using the same command and manually input the nodeport before creating the service.
+Both the above commands have their own challenges. While one of it cannot accept a selector the other cannot accept a node port. I would recommend going with the kubectl expose command. If you need to specify a node port, generate a definition file using the same command and manually input the nodeport before creating the 
+ .
+
+ 
+Imperative challenge:
+ 
+- Deploy a pod named nginx-pod using the nginx:alpine image. kubectl run nginx-pod --image=nginx:alpine
+- Deploy a redis pod using the redis:alpine image with the labels set to tier=db. kubectl run redis --image=redis:alpine --labels=tier=db
+- Create a service redis-service to expose the redis application within the cluster on port 6379, kubectl expose pods redis --port=6379 --name=redis-service
+- Create a deployment named webapp using the image kodekloud/webapp-color with 3 replicas. kubectl create  deployment webapp --image=kodekloud/webapp-color --replicas=3
+- Create a new pod called custom-nginx using the nginx image and expose it on container port 8080.  kubectl run custom-nginx --image=nginx --port=8080
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
