@@ -399,9 +399,11 @@ status: {}
  - Enable communication from outside
  - provide customers with connectivity 
  - different types of services:
-      - Node-Port: Listens to services on the node and forward requests to the pods: it checks this by looking at the labels of the pod to forward to 
+      - Node-Port: Listens to services on the node and forward requests to the pods: it checks this by looking at the labels of the pod to forward to. Uses a random algorism 
       - Cluster-ip: services creates virtual ip to create communication between different services. 
       - Load balancer: distribute load 
+
+Cluster-Ip: NodePort
 
 apiVersion: v1
 kind: service
@@ -418,7 +420,72 @@ spec:
       app: myapp
       type: front-end
 
+Cluster-ip: Yaml
 
+apiVersion: v1
+kind: service
+metadata:
+  name: myapp-service
+
+spec:
+  type: ClusterIP
+  ports:
+    - targetPort: 80
+      port: 80
+      nodePort: 30008
+  selector:
+      app: myapp
+      type: front-end
+
+Load-Balancer: Yaml
+
+apiVersion: v1
+kind: service
+metadata:
+  name: myapp-service
+
+spec:
+  type: LoadBalancer
+  ports:
+    - targetPort: 80
+      port: 80
+      nodePort: 30008
+  selector:
+      app: myapp
+      type: front-end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Load-Balancer: Yaml
+
+apiVersion: v1
+kind: service
+metadata:
+  name: myapp-service
+
+spec:
+  type: LoadBalancer
+  ports:
+    - targetPort: 80
+      port: 80
+      nodePort: 30008
+  selector:
+      app: myapp
+      type: front-end
 
 
 
