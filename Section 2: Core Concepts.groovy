@@ -454,22 +454,6 @@ spec:
       app: myapp
       type: front-end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Load-Balancer: Yaml
 
 apiVersion: v1
@@ -582,8 +566,23 @@ Imperative challenge:
 - Create a pod called httpd using the image httpd:alpine in the default namespace. Next, create a service of type ClusterIP by the same name (httpd). The target port for the service should be 80.
      - kubectl run httpd --image=httpd:alpine --port=80 --expose
 
- 
- 
+ Deployment:
+
+- Each container is encapsulated in pods 
+- multipled pods are deployed using replicasets 
+- Deployments works higher in the k8s heighharphy 
+- Deployments allow you to upgrade the underlying instances seemlessly using rolling updates 
+- When running deployment it automatically create replicaset to use rolling updates 
+
+Services:
+
+- Allow you to connect to Pods using service load balancer
+- Service types:
+    - NodePort - Services makes internal pod accessible via a node, the external port has to be in a range of 3000 etc
+          - Use labels under selector tab under matching pod, the service automatically select these pods to forwards request to
+          - Uses random algorism to load balance to pods
+    - ClusterIP - Services create virtual IP inside the cluster 
+    - Loadbalancer - provision load balancer for application, distribute load to different web services. 
  
  
  
