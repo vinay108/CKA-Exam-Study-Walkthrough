@@ -76,3 +76,6 @@ Labels and Selectors:
 
 - In order the replicaset to the pod, we configure the selector field to match the labels defined on the pod. so the matchlabels label need to match the label on the metadata. 
 - Annotation can be used to describe or provide information 
+
+1. We have deployed a number of PODs. They are labelled with tier, env and bu. How many PODs exist in the dev environment?
+Use selectors to filter the output = kubectl get pods --selector env=dev
