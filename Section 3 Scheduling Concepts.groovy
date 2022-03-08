@@ -52,4 +52,27 @@ Labels and Selectors:
   and group the pods by adding the spec.
 - Need to be aware that there are 2 sections with labels
      - the top part where it specifies the label, is the label of the replicaset, the labels under the template section is the labels of the pods. 
-apiVersion:
+
+  apiVersion: v1 
+  kind: ReplicationSet
+  metadata: 
+    name: myapp-rc
+    labels:
+        app: myapp
+        type: front-end
+    annotations:
+         buildversion: 1.34 -------------------------------Annotations can provide input and information. 
+  spec:
+  template:
+    metadata:
+      name: myapp-pod
+      labels:
+          app: myapp
+          type: front-end
+  spec:
+    containers:
+    - name: nginx-containers
+      image: nginx
+
+- In order the replicaset to the pod, we configure the selector field to match the labels defined on the pod. so the matchlabels label need to match the label on the metadata. 
+- Annotation can be used to describe or provide information 
