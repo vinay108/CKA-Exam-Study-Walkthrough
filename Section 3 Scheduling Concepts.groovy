@@ -79,3 +79,8 @@ Labels and Selectors:
 
 1. We have deployed a number of PODs. They are labelled with tier, env and bu. How many PODs exist in the dev environment?
 Use selectors to filter the output = kubectl get pods --selector env=dev
+
+
+2. How many PODs are in the finance business unit (bu)? kubectl get pods --selector bu==finance
+    
+3. How many objects are in the prod environment including PODs, ReplicaSets and any other objects? kubectl get all --selector env=prod
