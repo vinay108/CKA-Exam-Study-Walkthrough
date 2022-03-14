@@ -113,17 +113,50 @@ spec:
 
 
 Taints and Tolerations:
+  
+are used to set restrictions on what pods can be sceduled on nodes. 
      
-Taints: 
+Taints: Prevents pods joining the node
      
-Tolerations: 
+Tolerations: attracts the pod to the node, so enforces that pod to that node. 
+     
+- if you have pods A B C D and Nodes 1 2 3
+     - Placing a Taint to Node 1 called Taint =blue
+     - None of the pods can tolerate a taint so they be placed on Node 1 
+     - If we place toleration on Pod D to tolerate to go to Node 1 it works, the kube scheduler does this. #
+     - Taints are set on Nodes and tolerations are set on Pods 
 
+command:
+    - Kubectl taint nodes node-name key=value:taint-effect
+    - 3 types of options
+        - NoSchedule = Pods not be scheduled on the node
+        - PreferNoSchedule = the system will try to not schedule a pod to a node but this isnt guranteed
+        - NoExecute = new pods will not be scheduled on the node and existing pods will be evivted if they do not tolerate the taint, - 
+          may have been scheduled before taint was applied on the node.  
+    - Example configuration:
+           - kubectl taint nodes node1 app=blue:NoSchedule 
 
+    - Toleration - Pods 
+           - kubectl taint nodes node1 node1 app= blue:NoSchedule
+---
+apiVersion:
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  -  image: nginx
+     name: nginx
 
+toleration
+- key: "app"
+  operator: "Equal"
+  value: "blue"
+  effect: "NoSchedule"
 
-
-
-
+- If you have multiple nodes, and have taint and toleration on pod and taint on node, wheras if the other nodes dont have anything on them as in no taint or no toleration -
+     on other pods, the pod with the pod with toleration doesnt even have to be selected to go to pod with the correct taint, if it happens to land on another node it can go there - 
+     the taint chooses what it accepts and what it doesnt, it doesnt restrict pod joining other nodes with no restrictions.   
 
 
 
