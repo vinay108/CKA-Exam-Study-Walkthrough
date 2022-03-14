@@ -85,8 +85,9 @@ Use selectors to filter the output = kubectl get pods --selector env=dev
     
 3. How many objects are in the prod environment including PODs, ReplicaSets and any other objects? kubectl get all --selector env=prod
 
+4. Identify the POD which is part of the prod environment, the finance BU and of frontend tier? kubectl get pods --selector env=prod --selector bu=finance --selector tier=frontend 
 
-A ReplicaSet definition file is given replicaset-definition-1.yaml. Try to create the replicaset. There is an issue with the file. Try to fix it.
+5. A ReplicaSet definition file is given replicaset-definition-1.yaml. Try to create the replicaset. There is an issue with the file. Try to fix it.
 Need to set the pod label to frontend
 
 ---
@@ -107,3 +108,24 @@ spec:
        containers:
        - name: nginx
          image: nginx 
+
+
+
+
+Taints and Tolerations:
+     
+Taints: 
+     
+Tolerations: 
+
+
+
+
+
+
+
+
+
+
+
+
