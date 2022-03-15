@@ -157,8 +157,27 @@ toleration
 - If you have multiple nodes, and have taint and toleration on pod and taint on node, wheras if the other nodes dont have anything on them as in no taint or no toleration -
      on other pods, the pod with the pod with toleration doesnt even have to be selected to go to pod with the correct taint, if it happens to land on another node it can go there - 
      the taint chooses what it accepts and what it doesnt, it doesnt restrict pod joining other nodes with no restrictions.   
+          
+- Taint is set on the master node automatically to prevent any pods being set on the Masternode. 
+          to see this taint run , kubectl describe node kubemaster | grep Taint
 
 
-
-
+ - 3. Create a taint on node01 with key of spray, value of mortein and effect of NoSchedule = ubectl taint node node01 spray=mortein:NoSchedule
+ - 4. Create a new pod with the nginx image and pod name as mosquito. = kubectl run mosquito --image=nginx
+ - 7. Create another pod named bee with the nginx image, which has a toleration set to the taint mortein = 
+      
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bee
+spec:
+  containers:
+  - image: nginx
+    name: bee
+  tolerations:
+  - key: spray
+    value: mortein
+    effect: NoSchedule
+    operator: Equal
 
