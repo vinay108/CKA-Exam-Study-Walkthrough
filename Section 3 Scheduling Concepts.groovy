@@ -181,3 +181,9 @@ spec:
     effect: NoSchedule
     operator: Equal
 
+- Taints can only be configured on a node and it prevents pods joining node
+- toleration can only be configuered on a pod and it grants a policy allowing you to join a node 
+
+
+
+
