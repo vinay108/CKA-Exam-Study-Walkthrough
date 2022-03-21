@@ -164,6 +164,7 @@ toleration
 
  - 3. Create a taint on node01 with key of spray, value of mortein and effect of NoSchedule = ubectl taint node node01 spray=mortein:NoSchedule
  - 4. Create a new pod with the nginx image and pod name as mosquito. = kubectl run mosquito --image=nginx
+ - 10 Remove the taint on controlplane, which currently has the taint effect of NoSchedule = kubectl edit node controlplane remove taint
  - 7. Create another pod named bee with the nginx image, which has a toleration set to the taint mortein = 
       
 ---
