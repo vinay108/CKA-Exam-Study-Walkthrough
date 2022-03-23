@@ -187,5 +187,30 @@ spec:
 - toleration can only be configuered on a pod and it grants a policy allowing you to join a node 
 
 
+NodeSelector:
+
+- for example you have 3 nodes, Large which has higher CPU/Process, followed by medium and then small. 
+     - However any pods can go to any nodes regardless if its over utilised or not. 
+          
+- to prevent the above from happening you can set limitations on the pods so they only run on particular nodes. 
+
+          ---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bee
+spec:
+  containers:
+  - image: nginx
+    name: bee
+  
+  nodeselector:
+    size: Large ------------------------------This is now included in the Pod definition yaml, this is the label which is on the node. 
+       
+- Must Label the node first. 
+       - kubectl label nodes node-1 size=Large
+- Using nodeselector has limitations, you can only select 1 Label and does not allow you to using conditional statements such as Large and Small and not Medium.
+     - This is where nodeaffinity comes in. 
+
 
 
