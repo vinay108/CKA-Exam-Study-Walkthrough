@@ -216,3 +216,25 @@ spec:
 Node Affinity:
   
 - Assigning specific pods to nodes 
+
+          ---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bee
+spec:
+  containers:
+  - image: nginx
+    name: bee
+  
+ affinity:
+  nodeAffinity:
+      requiredDuringSchedulingIgnoreDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - matchExpressions:
+            - key: size
+              operator: In
+              values: 
+              - Large
+
