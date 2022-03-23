@@ -213,4 +213,6 @@ spec:
      - This is where nodeaffinity comes in. 
 
 
-
+Node Affinity:
+  
+- Assigning specific pods to nodes 
