@@ -248,8 +248,15 @@ can even do this:
 
 - what is someone changes the label in the future? will the pod stay on the node? this is define by underneath the nodeaffinity section:
      Node Affinity types:
-       - requiredDuringSchedulingIgnoredDuringExecution:
-       - PreferredDuringSchedulingIgnoredDuringExecution:
+       - requiredDuringSchedulingIgnoredDuringExecution: ------- Scheduling pod to node is mandated, the ignore during execution part states that even if labels are removed
+                                                                 it does not matter, the pod will still be scheduled on this node until it removed. 
+     
+       - PreferredDuringSchedulingIgnoredDuringExecution: ------ Scheduling pod to node is not mandated if no Label exist. the ignore during execution part states that even if labels are removed
+                                                                 it does not matter, the pod will still be scheduled on this node until it removed
+     
+       - PreferredDuringSchedulingrequiredDuringExecution: ------ Scheduling pod to node is not mandated if no Label exist. the required during execution part states that even if labels are removed
+                                                                 it matters, the pods whos label does not match and will evict pods that does not meet the rules. e.g if label Large is removed from rules. 
+     
        - Planned:
           - requiredDuringSchedulingRequiredDuringExecution:
 
