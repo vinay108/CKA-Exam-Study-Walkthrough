@@ -229,7 +229,7 @@ spec:
   
  affinity:
   nodeAffinity:
-      requiredDuringSchedulingIgnoreDuringExecution:
+      requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
         - matchExpressions:
           - matchExpressions:
@@ -237,4 +237,22 @@ spec:
               operator: In
               values: 
               - Large
+
+can even do this:
+     
+          - matchExpressions:
+            - key: size
+              operator: NotIn
+              values: 
+              - Small
+
+- what is someone changes the label in the future? will the pod stay on the node? this is define by underneath the nodeaffinity section:
+     Node Affinity types:
+       - requiredDuringSchedulingIgnoredDuringExecution:
+       - PreferredDuringSchedulingIgnoredDuringExecution:
+       - Planned:
+          - requiredDuringSchedulingRequiredDuringExecution:
+
+
+
 
