@@ -263,5 +263,27 @@ can even do this:
 
 3. Apply a label color=blue to node node01 = kubectl label nodes node01 color=blue
 4. Create a new deployment named blue with the nginx image and 3 replicas. = kubectl create deployment blue --image=nginx --replicas=3           
-6. Set Node Affinity to the deployment to place the pods on node01 only:
-           
+6. Set Node Affinity to the deployment to place the pods on node01 only: add after pod spec under deploment:
+           affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: color
+                operator: In
+                values:
+                - blue
+7. Which nodes are the pods placed on now?: node01
+
+8. Create a new deployment named red with the nginx image and 2 replicas, and ensure it gets placed on the controlplane node only.
+   Use the label - node-role.kubernetes.io/master - set on the controlplane node.
+
+     affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: node-role.kubernetes.io/master
+                operator: Exists
+
+
