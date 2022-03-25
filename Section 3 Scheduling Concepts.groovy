@@ -332,7 +332,12 @@ spec:
          memory: '1Gi"
          cpu: 1
 
+- 1 count of CPU means, 0.1 = 100m, 1m = 1 vCPU, can request higher number of CPU
+- Memory 256Mi or 268 etc, 1G
 
+- Lets looks at Container running on a node, a docker container has no limit resources it can consume on the nodes, can potentially sufficate nodes/other containers. 
+- By default k8s sets a limit of 1 Vcpu on container, so if you dont specify it will do this same as memory (512mb) on containers. 
+     - Limits are set for each container on the pod etc. 
 
                  
                  
