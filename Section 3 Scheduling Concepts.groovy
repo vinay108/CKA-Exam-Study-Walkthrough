@@ -304,3 +304,46 @@ Taints and Toleration Vs Node Affinity:
             - Using Taints on Nodes to only accept certain pods
             - using toleration to only tolerate certain nodes
             - and using node affinity to prevent other pods being placed on the nodes. 
+
+                 
+Resource Requirements and Limits:
+                 
+- each node has a set of cpu, disk resources, memory.
+- whenever a pod is set on the node, it consumed the nodes resources.
+- kube scheduler schedules pods to nodes. 
+                 - it takes into consideration the resources required and available on the nodes. 
+- for example, if the scheduler, schedules a pod on node 2, if the node has no resources the scheduler avoids on that node and does on the node with resources. 
+- if nothing is avaiable or no sufficient nodes to schedule node onto, then it will state pod as pending state.
+- CPU / MEM / DISK 
+     - for example pod requires 0.5 CPU and 256 Mi CPU, this is called resource request. 
+                 
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bee
+spec:
+  containers:
+  - image: nginx
+    name: bee   
+    ports: 
+     - containerPort: 8080
+    resources:
+       requests:
+         memory: '1Gi"
+         cpu: 1
+
+
+
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
