@@ -261,5 +261,7 @@ can even do this:
           - requiredDuringSchedulingRequiredDuringExecution:
 
 
-
-
+3. Apply a label color=blue to node node01 = kubectl label nodes node01 color=blue
+4. Create a new deployment named blue with the nginx image and 3 replicas. = kubectl create deployment blue --image=nginx --replicas=3           
+6. Set Node Affinity to the deployment to place the pods on node01 only:
+           
