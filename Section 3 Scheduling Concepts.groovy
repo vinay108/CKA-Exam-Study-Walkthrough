@@ -276,7 +276,8 @@ can even do this:
 7. Which nodes are the pods placed on now?: node01
 
 8. Create a new deployment named red with the nginx image and 2 replicas, and ensure it gets placed on the controlplane node only.
-   Use the label - node-role.kubernetes.io/master - set on the controlplane node.
+   Use the label - node-role.kubernetes.io/master - set on the controlplane node. you should create the file without actually running the deployment though by doing this command,
+     kubectl create deployment red --image=red --dry=run -o yaml > red.yaml
 
      affinity:
         nodeAffinity:
@@ -286,4 +287,20 @@ can even do this:
               - key: node-role.kubernetes.io/master
                 operator: Exists
 
-
+Taints and Toleration Vs Node Affinity:
+     
+- If you have 
+     - Blue, Red, Green and 2 other Nodes. 
+          - Apply taint marking each node with their colors i.e. Node 1 with Blue
+          - set tolerations on the pods to tolerate only certain nodes 
+     - However taints and toleration will not provide gurantee that the pods will go to specific nodes listed taints. 
+          
+ Now using NodeAffinity:
+          
+      - Label the nodes the same
+      - set node selectors on the pods to tie pods to nodes. 
+      - However there is always a chance of other pods going to nodes which may not be desired. 
+      - Can use taints and toleration and also Nodeaffinity together:
+            - Using Taints on Nodes to only accept certain pods
+            - using toleration to only tolerate certain nodes
+            - and using node affinity to prevent other pods being placed on the nodes. 
