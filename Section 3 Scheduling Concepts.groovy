@@ -338,16 +338,88 @@ spec:
 - Lets looks at Container running on a node, a docker container has no limit resources it can consume on the nodes, can potentially sufficate nodes/other containers. 
 - By default k8s sets a limit of 1 Vcpu on container, so if you dont specify it will do this same as memory (512mb) on containers. 
      - Limits are set for each container on the pod etc. 
+     - can change these limits on 
 
+In the previous lecture, I said -
+"When a pod is created the containers are assigned a default CPU request of .5 and memory of 256Mi". 
+ For the POD to pick up those defaults you must have first set those as default values for request and limit by creating a LimitRange in that namespace.  
+    
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: mem-limit-range
+spec:
+  limits:
+  - default:
+      memory: 512Mi
+    defaultRequest:
+      memory: 256Mi
+    type: Container
                  
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: cpu-limit-range
+spec:
+  limits:
+  - default:
+      cpu: 1
+    defaultRequest:
+      cpu: 0.5
+    type: Container                 
                  
+  Editing an existing pod:
+       
+Edit a POD
+Remember, you CANNOT edit specifications of an existing POD other than the below.
+
+spec.containers[*].image
+spec.initContainers[*].image
+spec.activeDeadlineSeconds
+spec.tolerations
+
+For example you cannot edit the environment variables, service accounts, resource limits (all of which we will discuss later) of a running pod.
+But if you really want to, you have 2 options:
+1. Run the kubectl edit pod <pod name> command.  This will open the pod specification in an editor (vi editor). 
+Then edit the required properties. When you try to save it, you will be denied. This is because you are attempting to edit a field on the pod that is not editable.
                  
-                 
-                 
-                 
-                 
-                 
-                 
+Scheduling, Test Resource Limits:
+   
+1. A pod called rabbit is deployed. Identify the CPU requirements set on the Pod = 1 (Describe command)
+3. Another pod called elephant has been deployed in the default namespace. It fails to get to a running state. Inspect this pod and identify the Reason why it is not running.
+     - What is OOMKilled (exit code 137) The OOMKilled error, also indicated by exit code 137, means that a container or pod was terminated because they used more memory than allowed. 
+       OOM stands for “Out Of Memory”. Kubernetes allows pods to limit the resources their containers are allowed to utilize on the host machine.
+5.  The elephant pod runs a process that consume 15Mi of memory. Increase the limit of the elephant pod to 20Mi.
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: elephant
+  namespace: default
+spec:
+  containers:
+  - args:
+    - --vm
+    - "1"
+    - --vm-bytes
+    - 15M
+    - --vm-hang
+    - "1"
+    command:
+    - stress
+    image: polinux/stress
+    name: mem-stress
+    resources:
+      limits:
+        memory: 20Mi
+      requests:
+        memory: 5Mi
+
+- what you can do is instead of deleting and re-creating new yaml file for elephant, you can simply re-create based on the existing pod.
+     - kubectl get pods elephant -o yaml > pod.yaml
+     - edit the yaml file from here 
+                
                  
                  
                  
