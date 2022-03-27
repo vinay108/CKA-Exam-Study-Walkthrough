@@ -489,8 +489,13 @@ Next, remove the replicas, strategy and status fields from the YAML file using a
 
 Finally, create the Daemonset by running kubectl create -f fluentd.yaml
 
-     
-     
+ Static Pods:
+      
+- The Kubelet can manage a node independtly 
+- Kubelet can create pods, usually the API server sends instructions to kubelet about creating pod details. 
+- Kubelet instead can read yaml files directly on the server i.e /etc/kubernetes/manifests, place the pod defintion files on the directory, kubelets check the directory 
+  creates the pods on the hosts, if app crash, kubelet restarts the pod, recreates pod if file updated.
+- called static pods. 
      
      
      
