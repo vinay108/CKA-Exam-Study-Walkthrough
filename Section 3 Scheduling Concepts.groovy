@@ -420,7 +420,14 @@ spec:
      - kubectl get pods elephant -o yaml > pod.yaml
      - edit the yaml file from here 
                 
-                 
+Daemon Sets:
+     
+- Daemonsets are like replicasets, help deploy multiple instances of pods however 1 on each node.
+- when a new node is added to the cluster, the daemonset is automatically assigned to the given node. 
+- when a node is removed so is that daeomonet pod. 
+- daemonset ensures copy of pod is presence on all cluster.
+- for example you want to deploty a monitoring agents and log viewer, 
+        -  dont have to worry about adding or removing daemonset will take care of it. 
                  
                  
                  
