@@ -497,5 +497,11 @@ Finally, create the Daemonset by running kubectl create -f fluentd.yaml
   creates the pods on the hosts, if app crash, kubelet restarts the pod, recreates pod if file updated.
 - called static pods. 
      
-     
-     
+ 1. How many static pods exist in this cluster in all namespaces? 2  
+ 2. Which of the below components is NOT deployed as a static pod? CoreDNS
+ 3. Which of the below components is NOT deployed as a static POD? Run kubectl get pods --all-namespaces and look for the pod from the list that does not end with -controlplane
+    kube-proxy   
+ 4. 
+       
+       
+       
