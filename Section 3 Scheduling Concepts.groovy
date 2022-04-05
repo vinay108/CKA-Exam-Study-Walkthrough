@@ -387,7 +387,7 @@ Scheduling, Test Resource Limits:
    
 1. A pod called rabbit is deployed. Identify the CPU requirements set on the Pod = 1 (Describe command)
 3. Another pod called elephant has been deployed in the default namespace. It fails to get to a running state. Inspect this pod and identify the Reason why it is not running.
-     - What is OOMKilled (exit code 137) The OOMKilled error, also indicated by exit code 137, means that a container or pod was terminated because they used more memory than allowed. 
+     - What is OOM Killed (exit code 137) The OOM Killed error, also indicated by exit code 137, means that a container or pod was terminated because they used more memory than allowed. 
        OOM stands for “Out Of Memory”. Kubernetes allows pods to limit the resources their containers are allowed to utilize on the host machine.
 5.  The elephant pod runs a process that consume 15Mi of memory. Increase the limit of the elephant pod to 20Mi.
 
