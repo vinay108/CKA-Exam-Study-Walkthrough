@@ -507,15 +507,52 @@ Finally, create the Daemonset by running kubectl create -f fluentd.yaml
 - static pods:
      - created by kubelet
      - deploy control plane components as static pods 
+       
      
-     
-     
-     
- 1. How many static pods exist in this cluster in all namespaces? 2  
- 2. Which of the below components is NOT deployed as a static pod? CoreDNS
+ 1. How many static pods exist in this cluster in all namespaces? 2  (they have node name next to pod)
+ 2. Which of the below components is NOT deployed as a static pod? CoreDNS (Cause you can still have all these compononents listed) 
  3. Which of the below components is NOT deployed as a static POD? Run kubectl get pods --all-namespaces and look for the pod from the list that does not end with -controlplane
     kube-proxy   
- 4. 
+ 4. What is the path of the directory holding the static pod definition files? = /etc/kubernetes/manifests
+      First idenity the kubelet config file: ps -aux | grep /usr/bin/kubelet
+      grep -i staticpod /var/lib/kubelet/config.yaml As you can see, the path configured is the /etc/kubernetes/manifests directory.
+ 7. What is the docker image used to deploy the kube-api server as a static pod? = k8s.gcr.io/kube-apiserver:v1.20.0
+      Check the image defined in the /etc/kubernetes/manifests/kube-apiserver.yaml manifest file 
+ 8. Create a static pod named static-busybox that uses the busybox image and the command sleep 1000 =  Create a pod definition file called static-busybox.yaml with the provided specs and place it under /etc/kubernetes/manifests directory.
+      - Create a pod definition file in the manifests folder. To do this, run the command:
+        kubectl run --restart=Never --image=busybox static-busybox --dry-run=client -o yaml --command -- sleep 1000 > /etc/kubernetes/manifests/static-busybox.yaml
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+
        
-       
+     
+
+
+
+
+
        
