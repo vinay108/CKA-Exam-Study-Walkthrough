@@ -496,6 +496,20 @@ Finally, create the Daemonset by running kubectl create -f fluentd.yaml
 - Kubelet instead can read yaml files directly on the server i.e /etc/kubernetes/manifests, place the pod defintion files on the directory, kubelets check the directory 
   creates the pods on the hosts, if app crash, kubelet restarts the pod, recreates pod if file updated.
 - called static pods. 
+- Directory called --config=kubeconfig.yaml \\ (path called staticPodPath)
+- can check static pods by running docker ps command. 
+- but what if you do have a cluster/api server etc, can you still create both kind of pods same time = yes it can, kubelet can create pods from api server and can also create 
+  static pods from kubelet.  
+- kubelet can take request from different inputs, pod definition file from static pods folder and second is from http endpoint.   
+- the API Server is still aware of kubectl get pods commands will tell you static pods, when a kubelet creates a static pod mirror object in the api server. 
+- can only delete file by changing the pod manifest folder.      
+- by default the pod name is appended with the node name by default.    
+- static pods:
+     - created by kubelet
+     - deploy control plane components as static pods 
+     
+     
+     
      
  1. How many static pods exist in this cluster in all namespaces? 2  
  2. Which of the below components is NOT deployed as a static pod? CoreDNS
