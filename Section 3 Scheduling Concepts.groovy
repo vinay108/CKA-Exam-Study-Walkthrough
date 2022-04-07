@@ -577,9 +577,12 @@ spec:
   - image: nginx
     name: nginx
   schedulerName: my-custom-scheduler
+
+- How to tell which kube-scheduler picked up the pod allocation, this can be done by simply doing:
+     - kubectl get events, will list all the events - success etc
       
-      
-      
+3. Deploy an additional scheduler to the cluster following the given specification.
+   Use the manifest file used by kubeadm tool. Use a different port than the one used by the current one.      
       
       
       
