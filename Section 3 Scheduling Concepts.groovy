@@ -530,11 +530,53 @@ Finally, create the Daemonset by running kubectl create -f fluentd.yaml
  - leader elect is when you have multiple schedulers in a HA cluster master nodes scheduler running on them only 1 can be active at a time, 
    it allows you to elect which kubeschuler on node will be active on 1 time. 
  - to get multiple kube scheduler working must set leader elect option to false 
+ - you copy from the kube-scueduler and then put create your customer yaml file for kube-scheduler. 
       
-      
-      
-      
-      
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kube-scheduler
+  namespace: kube-system
+spec:
+  containers:
+  - command:
+    - kube-scheduler
+    - --address=127.0.0.1
+    - --kubeconfig=/etc/kubernetes/scheduler.conf 
+    - --leader-elect=true
+    image: ....
+    name: kube-scheduler
+    
+customer-shceduler config:
+     
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-custom-scheduler
+  namespace: kube-system
+spec:
+  containers:
+  - command:
+    - kube-scheduler
+    - --address=127.0.0.1
+    - --kubeconfig=/etc/kubernetes/scheduler.conf 
+    - --leader-elect=true
+    - --scheduler-name=my-custom-scheduler
+    image: ....
+    name: kube-scheduler
+ 
+create a custom scheduler to a pod: allow pod to use the new kubernetes scheduler. 
+  - do, kubectl get pods and copy the pods name to pod definition 
+     
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+  schedulerName: my-custom-scheduler
       
       
       
