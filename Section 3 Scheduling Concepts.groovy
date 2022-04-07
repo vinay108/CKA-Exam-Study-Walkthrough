@@ -523,7 +523,13 @@ Finally, create the Daemonset by running kubectl create -f fluentd.yaml
         kubectl run --restart=Never --image=busybox static-busybox --dry-run=client -o yaml --command -- sleep 1000 > /etc/kubernetes/manifests/static-busybox.yaml
       
       
-      
+ Multiple Scheduler:
+    
+ - can customise the sheduler and dictate how and when it schedule for example schedule a pod to a specific scheduler. 
+ - can have multiple scheduler at the same time
+ - leader elect is when you have multiple schedulers in a HA cluster master nodes scheduler running on them only 1 can be active at a time, 
+   it allows you to elect which kubeschuler on node will be active on 1 time. 
+ - to get multiple kube scheduler working must set leader elect option to false 
       
       
       
