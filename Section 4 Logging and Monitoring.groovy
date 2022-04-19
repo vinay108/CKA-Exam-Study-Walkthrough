@@ -45,6 +45,19 @@ Pracice test 1 monitoring:
 8. Identify the POD that consumes the least CPU.
    = lion
      
-     
+- Applications log:
+  Docker logs:
+  - docker run event-simulator = random event 
+  - docker run -d (detached mode) event-simulator
+  - docker logs -f ecf (lets you see live logs using -f)
+  kubernetes logs:
+  - kubectl create -f event-simulator.yaml
+  - kubectl logs -f event-simulator-pod (view logs -f live logs, specific to running container inside the pod)
+
+  - Kubenetes pods can have multiple docker containers in them, under container you mention the name and image, 
+    if you can run the kubectl log, you will need to specify the exact container name since it has more then 1. 
+    
+
+  
      
      
