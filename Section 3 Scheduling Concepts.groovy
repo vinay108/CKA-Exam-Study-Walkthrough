@@ -663,10 +663,11 @@ Final challenge:
  
 Configuring Kubernetes scheduler
 
-1. 
-
-2.
-
+1. What is the name of the POD that deploys the default kubernetes scheduler in this environment?
+   = kube-scheduler-controlplane
+2. What is the image used to deploy the kubernetes scheduler?
+   Inspect the kubernetes scheduler pod and identify the image
+   = k8s.gcr.io/kube-scheduler:v1.23.0
 3.
 
 4. Let's create a configmap that the new scheduler will employ using the concept of ConfigMap as a volume.
