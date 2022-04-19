@@ -658,13 +658,79 @@ spec:
     name: kubeconfig
 status: {}      
       
+
+Final challenge:
+ 
+Configuring Kubernetes scheduler
+
+1. 
+
+2.
+
+3.
+
+4. Let's create a configmap that the new scheduler will employ using the concept of ConfigMap as a volume.
+   Create a configmap with name my-scheduler-config using the content of file /root/my-scheduler-config.yaml
+   = kubectl create configmap my-scheduler-config --from-file=/root/my-scheduler-config.yaml -n kube-system
+
+5. Deploy an additional scheduler to the cluster following the given specification.
+   Use the manifest file provided at /root/my-scheduler.yaml. Use the same image as used by the default kubernetes scheduler.
       
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: my-scheduler
+  name: my-scheduler
+  namespace: kube-system
+spec:
+  serviceAccountName: my-scheduler
+  containers:
+  - command:
+    - /usr/local/bin/kube-scheduler
+    - --config=/etc/kubernetes/my-scheduler/my-scheduler-config.yaml
+    image: k8s.gcr.io/kube-scheduler:v1.23.0 # changed ---------------------------------------This was changed. 
+    livenessProbe:
+      httpGet:
+        path: /healthz
+        port: 10259
+        scheme: HTTPS
+      initialDelaySeconds: 15
+    name: kube-second-scheduler
+    readinessProbe:
+      httpGet:
+        path: /healthz
+        port: 10259
+        scheme: HTTPS
+    resources:
+      requests:
+        cpu: '0.1'
+    securityContext:
+      privileged: false
+    volumeMounts:
+      - name: config-volume
+        mountPath: /etc/kubernetes/my-scheduler
+  hostNetwork: false
+  hostPID: false
+  volumes:
+    - name: config-volume
+      configMap:
+        name: my-scheduler-config     
       
+6. A POD definition file is given. Use it to create a POD with the new custom scheduler.
+   File is located at /root/nginx-pod.yaml    
       
-      
-      
-      
-      
+---
+apiVersion: v1 
+kind: Pod 
+metadata:
+  name: nginx 
+spec:
+  schedulerName: my-scheduler ------------------------------changed
+  containers:
+  - image: nginx
+    name: nginx
       
       
       
