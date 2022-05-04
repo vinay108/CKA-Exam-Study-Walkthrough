@@ -40,3 +40,14 @@ spec:
   - at the same time starts taking down the old pods 1 by 1 upon rolling update. 
   - when you upgrade your application and realise something isnt right i.e something is wrong with new version of build for example ---
     you can roll back your update and rollback to previous revision destroying new pods and bringing old ones back. 
+    
+   commands:
+    
+   create ---------- kubectl create -f deployment-definition.yml
+   get    ---------- kubectl get deployments
+   update ---------- Kubectl apply -f deployment-definition.yml
+                     kubectl set image deployment/my-app-deployment nginx=nginx:1.9.1
+   status ---------- kubectl rollout status deployment/myapp-deployment
+                     kubectl rollout history deployment/myapp-deployment
+   rollback -------- kubectl rollout undo deployment/myapp-deploy
+  
