@@ -53,9 +53,9 @@ spec:
   
 Practice test: Managing application logs:
   
--  We have deployed a POD hosting an application. Inspect it. Wait for it to start.
-- A user - USER5 - has expressed concerns accessing the application. Identify the cause of the issue.
-  Inspect the logs of the POD = kubectl logs webapp-1
-- We have deployed a new POD - webapp-2 - hosting an application. Inspect it. Wait for it to start.
-- A user is reporting issues while trying to purchase an item. Identify the user and the cause of the issue.
-  Inspect the logs of the webapp in the POD = Since there is more then 1 container, need to specify the container name = kubectl logs webapp-2 -c simple-webapp
+1 - We have deployed a POD hosting an application. Inspect it. Wait for it to start.
+2 - A user - USER5 - has expressed concerns accessing the application. Identify the cause of the issue.
+    Inspect the logs of the POD = kubectl logs webapp-1
+3 - We have deployed a new POD - webapp-2 - hosting an application. Inspect it. Wait for it to start.
+4 - A user is reporting issues while trying to purchase an item. Identify the user and the cause of the issue.
+    Inspect the logs of the webapp in the POD = Since there is more then 1 container, need to specify the container name = kubectl logs webapp-2 -c simple-webapp
