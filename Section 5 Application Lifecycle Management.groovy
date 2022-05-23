@@ -122,3 +122,26 @@ spec:
     Do not delete and re-create the deployment. Only set the new image name for the existing deployment.
     = Run the command: kubectl edit deployment frontend and modify the required field
   
+Commands and arguments:
+      
+docker run --name ubuntu-sleeper ubuntu-sleeper
+docker run --name ubuntu-sleeper ubuntu-sleeper 10 
+
+FROM Ubuntu
+ENTRYPOINT ["sleep"] (This relates to Command)
+CMD ["5"] (This relates to Args)
+
+apiVersion:v1
+kind: Pod
+metadata: 
+ namee: ubuntu-sleeper-pod
+spec:
+   containers: 
+      - name: ubuntu-sleeper
+        image: ubuntu-sleeper
+        command:["sleep2.0"]
+        args: ["10"]
+
+
+
+
