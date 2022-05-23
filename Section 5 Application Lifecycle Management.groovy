@@ -59,3 +59,5 @@ Practice test: Managing application logs:
 3 - We have deployed a new POD - webapp-2 - hosting an application. Inspect it. Wait for it to start.
 4 - A user is reporting issues while trying to purchase an item. Identify the user and the cause of the issue.
     Inspect the logs of the webapp in the POD = Since there is more then 1 container, need to specify the container name = kubectl logs webapp-2 -c simple-webapp
+  
+- Container only run if process runs, if the process stops so does the container. 
