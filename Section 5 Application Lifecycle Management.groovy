@@ -50,14 +50,75 @@ spec:
    status ---------- kubectl rollout status deployment/myapp-deployment
                      kubectl rollout history deployment/myapp-deployment
    rollback -------- kubectl rollout undo deployment/myapp-deploy
-  
-Practice test: Managing application logs:
-  
-1 - We have deployed a POD hosting an application. Inspect it. Wait for it to start.
-2 - A user - USER5 - has expressed concerns accessing the application. Identify the cause of the issue.
-    Inspect the logs of the POD = kubectl logs webapp-1
-3 - We have deployed a new POD - webapp-2 - hosting an application. Inspect it. Wait for it to start.
-4 - A user is reporting issues while trying to purchase an item. Identify the user and the cause of the issue.
-    Inspect the logs of the webapp in the POD = Since there is more then 1 container, need to specify the container name = kubectl logs webapp-2 -c simple-webapp
-  
+ 
 - Container only run if process runs, if the process stops so does the container. 
+  
+  
+Practice test - Rolling updates and Rollbacks:
+
+3. Run the script named curl-test.sh to send multiple requests to test the web application. Take a note of the output.
+   Execute the script at /root/curl-test.sh. = Hello, Application Version: v1 ; Color: blue OK
+ 
+4. Inspect the deployment and identify the number of PODs deployed by it = 4
+
+5. What container image is used to deploy the applications? = kodekloud/webapp-color:v1
+
+6. Inspect the deployment and identify the current strategy = RollingUpdate
+  
+7. If you were to upgrade the application now what would happen? =  Pods are upgraded few at a time
+
+8. Let us try that. Upgrade the application by setting the image on the deployment to kodekloud/webapp-color:v2
+   Do not delete and re-create the deployment. Only set the new image name for the existing deployment.
+  
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: "2022-05-23T20:07:08Z"
+  generation: 1
+  name: frontend
+  namespace: default
+  resourceVersion: "856"
+  uid: f6fbe6bf-7ef7-4cb1-8f86-ddf35dd6672b
+spec:
+  minReadySeconds: 20
+  progressDeadlineSeconds: 600
+  replicas: 4
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      name: webapp
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: webapp
+    spec:
+      containers:
+      - image: kodekloud/webapp-color:v2 <<<<<-------------------------------------------------Here needs to be updated
+        imagePullPolicy: IfNotPresent
+        name: simple-webapp
+ 
+10. Up to how many PODs can be down for upgrade at a time
+    Consider the current strategy settings and number of PODs - 4 
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+    = Since it says 25% so this equals 1 pod is allowed to be down at the time of upgrade. 
+
+11. Change the deployment strategy to Recreate
+    Delete and re-create the deployment if necessary. Only update the strategy type for the existing deployment.
+    = Run the command kubectl edit deployment frontend and modify the required field. Make sure to delete the properties of rollingUpdate as well, set at strategy.rollingUpdate.
+    
+12. Upgrade the application by setting the image on the deployment to kodekloud/webapp-color:v3
+    Do not delete and re-create the deployment. Only set the new image name for the existing deployment.
+    = Run the command: kubectl edit deployment frontend and modify the required field
+  
