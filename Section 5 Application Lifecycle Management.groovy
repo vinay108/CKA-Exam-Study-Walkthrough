@@ -211,3 +211,91 @@ spec:
   - name: simple-webapp
     image: kodekloud/webapp-color
     args: ["--color", "green"]
+
+
+Enviroment variable in applications:
+  
+To set up an enviroment variable. set up a env property (array)
+
+---
+apiVersion: v1 
+kind: Pod 
+metadata:
+  name: webapp-green
+  labels:
+      name: webapp-green 
+spec:
+  containers:
+  - name: simple-webapp
+    image: kodekloud/webapp-color
+    
+    env: 
+      - name: APP_COLOR
+        value: Pink
+
+(There are other ways in setting up enviroment variables such as config maps and secrets etc).
+  
+ConfigMap:
+
+---
+apiVersion: v1 
+kind: Pod 
+metadata:
+  name: webapp-green
+  labels:
+      name: webapp-green 
+spec:
+  containers:
+  - name: simple-webapp
+    image: kodekloud/webapp-color
+    
+    env: 
+      - name: APP_COLOR
+        valueFrom:
+            configMapKeyRef:
+          
+Secrets: 
+          
+---
+apiVersion: v1 
+kind: Pod 
+metadata:
+  name: webapp-green
+  labels:
+      name: webapp-green 
+spec:
+  containers:
+  - name: simple-webapp
+    image: kodekloud/webapp-color
+    
+    env: 
+      - name: APP_COLOR
+        valueFrom:
+           secretKeyRef:
+          
+ConfigMaps:
+  
+1. If  you have a lot of pod definition files, it will become difficult to manage data.
+2. ConfigMaps are used to pass configuration data in a form of key value pair. 
+3. When a pod is created inject the configMap into the pod so the key value pairs are available as enviroment variables 
+   for the application hosted in the enviroment. 
+4. Can be configured imperative or declarative 
+      - kubectl create configmap
+      - app-config --from-literal=APP_COLOR-blue \
+      - app-config --from-file=app_config.properties
+
+Declarative:
+      
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: game-demo
+data:
+  # property-like keys; each key maps to a simple value
+  player_initial_lives: "3"
+  ui_properties_file_name: "user-interface.properties"
+     
+5. To view configMaps, run this command:
+      - kubectl get configmaps
+
+
