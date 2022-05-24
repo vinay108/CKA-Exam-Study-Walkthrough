@@ -142,6 +142,72 @@ spec:
         command:["sleep2.0"]
         args: ["10"]
 
+Practice test commands and arguments:
+  
+1. How many PODs exist on the system? = 1
+2. What is the command used to run the pod ubuntu-sleeper? = Run the command kubectl describe pod and look for command option = sleep 4800
+3. Create a pod with the ubuntu image to run a container to sleep for 5000 seconds. Modify the file ubuntu-sleeper-2.yaml.
+   Note: Only make the necessary changes. Do not modify the name. = kubectl run ubuntu-sleeper-2 --image=ubuntu --dry-run=client -o yaml > ubuntu-sleeper-2.yaml
 
+---
+apiVersion: v1 
+kind: Pod 
+metadata:
+  name: ubuntu-sleeper-2 
+spec:
+  containers:
+  - name: ubuntu
+    image: ubuntu
+    command: <<<<<<<<<<------------------------------These commands below
+      - "sleep"
+      - "5000"
 
+4. Create a pod using the file named ubuntu-sleeper-3.yaml. There is something wrong with it. Try to fix it!
+   Note: Only make the necessary changes. Do not modify the name.
 
+apiVersion: v1
+kind: Pod 
+metadata:
+  name: ubuntu-sleeper-3
+spec:
+  containers:
+  - name: ubuntu
+    image: ubuntu
+    command:
+      - "sleep"
+      - "1200" <<<<<<-------- This was without approphe
+  
+  
+5. Update pod ubuntu-sleeper-3 to sleep for 2000 seconds.
+   Note: Only make the necessary changes. Do not modify the name of the pod. Delete and recreate the pod if necessary.  
+   = update command above to 2000
+  
+6. Inspect the file Dockerfile given at /root/webapp-color directory. What command is run at container startup? 
+   = python.app.py
+  
+  
+7. Inspect the file Dockerfile2 given at /root/webapp-color directory. What command is run at container startup?
+   = python.app.py --color-red
+
+8. Inspect the two files under directory webapp-color-2. What command is run at container startup?
+   Assume the image was created from the Dockerfile in this folder. = The ENTRYPOINT in the Dockerfile is overridden by the command in the pod definition
+   = - color green
+
+9. Inspect the two files under directory webapp-color-3. What command is run at container startup?
+   Assume the image was created from the Dockerfile in this folder.
+   =  python app.py --color pink
+
+10. Create a pod with the given specifications. By default it displays a blue background. Set the given command line arguments to change it to green
+
+---
+apiVersion: v1 
+kind: Pod 
+metadata:
+  name: webapp-green
+  labels:
+      name: webapp-green 
+spec:
+  containers:
+  - name: simple-webapp
+    image: kodekloud/webapp-color
+    args: ["--color", "green"]
