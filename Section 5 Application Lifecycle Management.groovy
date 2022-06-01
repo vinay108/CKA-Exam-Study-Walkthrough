@@ -317,4 +317,4 @@ spec:
       - configMapRef:
            name: app-config <<<-----------This is a new propert called 'envFrom' property, specify and inject configmap from one created earlier before. 
 
-
+7. There are other ways in injecting configuration data into pod above is using config maps however other ways are, single enviroment variable or injecting as a file volume. 
