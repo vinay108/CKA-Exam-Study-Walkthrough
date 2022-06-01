@@ -185,7 +185,6 @@ spec:
 6. Inspect the file Dockerfile given at /root/webapp-color directory. What command is run at container startup? 
    = python.app.py
   
-  
 7. Inspect the file Dockerfile2 given at /root/webapp-color directory. What command is run at container startup?
    = python.app.py --color-red
 
@@ -294,8 +293,28 @@ data:
   # property-like keys; each key maps to a simple value
   player_initial_lives: "3"
   ui_properties_file_name: "user-interface.properties"
+
+followed by kubectl create -f .....yaml
      
 5. To view configMaps, run this command:
       - kubectl get configmaps
+
+6. The most important step is to configure it with a pod now, 
+   below is a simple pod yaml which runs an application:
+  
+---
+apiVersion: v1 
+kind: Pod 
+metadata:
+  name: webapp-green
+  labels:
+      name: webapp-green 
+spec:
+  containers:
+  - name: simple-webapp
+    image: kodekloud/webapp-color 
+    envFrom: 
+      - configMapRef:
+           name: app-config <<<-----------This is a new propert called 'envFrom' property, specify and inject configmap from one created earlier before. 
 
 
