@@ -318,3 +318,26 @@ spec:
            name: app-config <<<-----------This is a new propert called 'envFrom' property, specify and inject configmap from one created earlier before. 
 
 7. There are other ways in injecting configuration data into pod above is using config maps however other ways are, single enviroment variable or injecting as a file volume. 
+
+
+Practice test: Enviroment variables:
+      
+1. 
+2.
+3. What is the value set on the environment variable APP_COLOR on the container in the pod? = kubectl describe pod webapp-color = ping
+4. Update the environment variable on the POD to display a green background
+   Note: Delete and recreate the POD. Only make the necessary changes. Do not modify the name of the Pod.
+   = kubectl delete pod webapp-color / followed by / kubectl edit pod webapp-color / 
+5.
+6.
+7.
+8.
+9.
+10.
+      
+      
+      
+      
+      
+      
+      
