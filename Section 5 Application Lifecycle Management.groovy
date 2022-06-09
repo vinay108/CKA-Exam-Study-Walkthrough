@@ -327,7 +327,14 @@ Practice test: Enviroment variables:
 3. What is the value set on the environment variable APP_COLOR on the container in the pod? = kubectl describe pod webapp-color = ping
 4. Update the environment variable on the POD to display a green background
    Note: Delete and recreate the POD. Only make the necessary changes. Do not modify the name of the Pod.
-   = kubectl delete pod webapp-color / followed by / kubectl edit pod webapp-color / 
+   = kubectl edit pod webapp-color / edit the color from pink to green / since you cannot modify this element, it will save this in the tmp folder / go to the tmp file
+     in my case this is /tmp/kubectl-edit-3921757067.yaml / use this command to force this 'green' color change / 
+     using command = kubectl replace --force -f /tmp/kubectl-edit-3921757067.yaml / this kills the existing pod and replace variabel to green:
+     
+     see below: 
+     controlplane ~ ✖ kubectl replace --force -f /tmp/kubectl-edit-3921757067.yaml
+     pod "webapp-color" deleted
+     pod/webapp-color replaced 
 5.
 6.
 7.
