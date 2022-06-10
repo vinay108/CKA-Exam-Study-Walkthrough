@@ -360,7 +360,10 @@ metadata:
 
 
 
-10. 
+10. Update the environment variable on the POD to use the newly created ConfigMap
+    Note: Delete and recreate the POD. Only make the necessary changes. Do not modify the name of the Pod.
+      
+    
       
       
       
