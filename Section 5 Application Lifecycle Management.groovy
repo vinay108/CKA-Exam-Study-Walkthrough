@@ -337,10 +337,30 @@ Practice test: Enviroment variables:
      pod/webapp-color replaced 
 5.
 6.
-7.
-8.
-9.
-10.
+7. Identify the database host from the config map db-config. = kubectl describe configmap db-config
+8. Identify the database host from the config map db-config = SQL01.example.com
+9. Create a new ConfigMap for the webapp-color POD. Use the spec given below. = 
+    this way = kubectl create configmap webapp-config-map --dry-run=client -o yaml  > webapp-config-map.yml
+    however you need to update the file alsow with the data field.
+  
+    or this way is even better =
+    kubectl create configmap webapp-config-maps  --from-literal=APP_color=darkblue
+  
+apiVersion: v1
+data:
+  APP_color: darkblue
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2022-06-10T21:41:56Z"
+  name: webapp-config-maps
+  namespace: default
+  resourceVersion: "1179"
+  uid: d1b7e004-ef1b-4152-9848-a438a2315467
+   
+
+
+
+10. 
       
       
       
