@@ -371,7 +371,7 @@ metadata:
   namespace: default
 spec:
   containers:
-  - envFrom:
+  - envFrom: <<<<--------------------------- Add this in with the following configmap to inject variables
     - configMapRef:
          name: webapp-config-map
     image: kodekloud/webapp-color
