@@ -356,13 +356,26 @@ metadata:
   namespace: default
   resourceVersion: "1179"
   uid: d1b7e004-ef1b-4152-9848-a438a2315467
-   
-
-
+  
 
 10. Update the environment variable on the POD to use the newly created ConfigMap
     Note: Delete and recreate the POD. Only make the necessary changes. Do not modify the name of the Pod.
       
+    ---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    name: webapp-color
+  name: webapp-color
+  namespace: default
+spec:
+  containers:
+  - envFrom:
+    - configMapRef:
+         name: webapp-config-map
+    image: kodekloud/webapp-color
+    name: webapp-color
     
       
       
