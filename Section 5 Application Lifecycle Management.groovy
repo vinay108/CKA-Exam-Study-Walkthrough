@@ -412,7 +412,24 @@ data:
   DB_PASSWORD:passwrd
 
 
-
+Practice test: Secrets:
+  
+1. kubectl get secrets = 1
+2. How many secrets are defined in the default-token secret? kubectl describe secrets default-token-ghlhj = 3
+3. What is the type of the default-token secret? = kubernetes.io/service-account-token
+4. Which of the following is not a secret data defined in default-token secret? = type is not a secret
+5. The reason the application is failed is because we have not created the secrets yet. 
+   Create a new secret named db-secret with the data given below.
+   You may follow any one of the methods discussed in lecture to create the secret.
+   = kubectl create secret generic db-secret --from-literal=DB_Host=sql01 --from-literal=DB_User=root --from-literal=DB_Password=password123
+  
+  
+  
+6. 
+7. 
+8. 
+9. 
+10. 
 
 
 
