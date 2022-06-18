@@ -377,7 +377,62 @@ spec:
     image: kodekloud/webapp-color
     name: webapp-color
     
-      
+    
+Secrets:
+  
+Configuring secrets in applications:
+ 
+- configmap stores data in clear format
+- instead store these in secrets, secrets stored are encoded and in hash 
+- 2 ways of creating secrets, declaritive or imperetitve. 
+        Imperetive: 
+      - kubectl create secret generic <secret name> --from-literal=<key>=<value>
+        kubectl create -f 
+        Declarative:
+      - Once you create the file below, need  to convert the secret to an encoded format, using linix commands:
+          - echo -n 'mysq'. | base64 
+              - once you recieve the values then paste the code into the value
+          - kubectl get secret app-secret -o yaml 
+          - to decode the hash values simply do this:
+              - echo -n 'decode code' | base64 --decode
+      - Now add a new property to pod definition stating this under spec:
+        - envFrom: <<<<--------------------------- Add this in with the following configmap to inject variables
+             - SecretRef:
+                    name: xxxxxxxx
+    
+
+ 
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-secret
+data: 
+  DB_HOST: mysql
+  DB_USER: root
+  DB_PASSWORD:passwrd
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       
       
       
