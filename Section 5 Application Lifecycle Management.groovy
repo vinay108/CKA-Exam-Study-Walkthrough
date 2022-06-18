@@ -426,7 +426,27 @@ Practice test: Secrets:
   
   
 6. 
-7. 
+7. Configure webapp-pod to load environment variables from the newly created secret.
+   Delete and recreate the pod if required.
+   = kubectl replace --force -f /tmp/kubectl-edit-1857774077.yaml
+   ---
+apiVersion: v1 
+kind: Pod 
+metadata:
+  labels:
+    name: webapp-pod
+  name: webapp-pod
+  namespace: default 
+spec:
+  containers:
+  - image: kodekloud/simple-webapp-mysql
+    imagePullPolicy: Always
+    name: webapp
+    envFrom:  <<<<<---------------------Add these lines below
+    - secretRef:
+        name: db-secret
+     
+     
 8. 
 9. 
 10. 
