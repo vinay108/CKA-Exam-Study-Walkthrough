@@ -425,7 +425,9 @@ Practice test: Secrets:
   
   
   
-6. 
+6. The reason the application is failed is because we have not created the secrets yet. Create a new secret named db-secret with the data given below.
+   You may follow any one of the methods discussed in lecture to create the secret.
+   = kubectl create secret generic db-secret  --from-literal=DB_Host=sql01 --from-literal=DB_User=root --from-literal=DB_Password=password123
 7. Configure webapp-pod to load environment variables from the newly created secret.
    Delete and recreate the pod if required.
    = kubectl replace --force -f /tmp/kubectl-edit-1857774077.yaml
