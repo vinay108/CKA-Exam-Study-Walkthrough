@@ -454,7 +454,11 @@ spec:
 10. 
 
 
-
+Kubernetes multi-container pods:
+  
+- Having 2 services working together such as log agent and web server. 
+- multi container pods share the same networking / storage 
+  
 
 
 
