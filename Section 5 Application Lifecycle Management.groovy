@@ -460,6 +460,41 @@ Kubernetes multi-container pods:
 - multi container pods share the same networking / storage 
   
 
+multi-container Practice test:
+  
+1. Identify the number of containers created in the red pod = kubectl describe pod red 
+   red 3/3 Running
+2. Identify the name of the containers running in the blue pod = teal and navy
+3. Create a multi-container pod with 2 containers. Use the spec given below.
+   If the pod goes into the crashloopbackoff then add the command sleep 1000 in the lemon container.
+   = 
+apiVersion: v1
+kind: Pod
+metadata:
+  name: yellow
+spec:
+  containers:
+  - name: lemon
+    image: busybox
+    command:
+      - sleep
+      - "1000"
+
+  - name: gold
+    image: redis
+4. We have deployed an application logging stack in the elastic-stack namespace. Inspect it.
+   Before proceeding with the next set of questions, please wait for all the pods in the elastic-stack namespace to be ready.
+   This can take a few minutes.
+   = kubectl get pod -n elastic-stack
+5. Once the pod is in a ready state, inspect the Kibana UI using the link above your terminal. There shouldn't be any logs for now.
+   We will configure a sidecar container for the application to send logs to Elastic Search.
+   NOTE: It can take a couple of minutes for the Kibana UI to be ready after the Kibana pod is ready.
+   You can inspect the Kibana logs by running:
+   kubectl -n elastic-stack logs kibana
+6. Inspect the app pod and identify the number of containers in it.
+   It is deployed in the elastic-stack namespace = 1
+7. 
+8.
 
 
 
