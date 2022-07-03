@@ -510,10 +510,39 @@ spec:
    kubectl -n elastic-stack logs kibana
 6. Inspect the app pod and identify the number of containers in it.
    It is deployed in the elastic-stack namespace = 1
-7. 
-8.
+7. The application outputs logs to the file /log/app.log. View the logs and try to identify the user having issues with Login.
+   Inspect the log file inside the pod. = kubectl -n elastic-stack exec -it app -- cat /log/app.log = USER5
+8. Edit the pod to add a sidecar container to send logs to Elastic Search. Mount the log volume to the sidecar container.
+   Only add a new container. Do not modify anything else. Use the spec provided below.
+
+   Name: app
+   Container Name: sidecar
+   Container Image: kodekloud/filebeat-configured
+   Volume Mount: log-volume
+   Mount Path: /var/log/event-simulator/
+   Existing Container Name: app
+   Existing Container Image: kodekloud/event-simulator
+
+   spec:
+  containers:
+  - name: app
+    image: kodekloud/event-simulator
+    volumeMounts:
+    - mountPath: /log
+      name: log-volume
+
+  - name: sidecar <<<<<<<<<<<<<<<<<<<<<< ----------------- NEW Config
+    image: kodekloud/filebeat-configured
+    volumeMounts:
+    - mountPath: /var/log/event-simulator/
+      name: log-volume
 
 
+Multi-container PODs Design Patterns:
+  
+There are 3 common patterns, when it comes to designing multi-container PODs. 
+1. The first and what we just saw with the logging service example is known as a side car pattern. 
+2. The others are the adapter and the ambassador pattern.
 
 
 
