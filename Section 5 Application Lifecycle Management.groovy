@@ -458,6 +458,23 @@ Kubernetes multi-container pods:
   
 - Having 2 services working together such as log agent and web server. 
 - multi container pods share the same networking / storage 
+
+To create a multi-container pod, add this below:
+  
+apiVersion: v1
+kind: Pod
+metadata:
+  name: yellow
+spec:
+  containers:
+  - name: lemon <<<---------------------This is classified as an. array to allow to add multiple other containers seen below i.e. gold
+    image: busybox
+    command:
+      - sleep
+      - "1000"
+
+  - name: gold
+    image: redis
   
 
 multi-container Practice test:
