@@ -545,10 +545,63 @@ There are 3 common patterns, when it comes to designing multi-container PODs.
 2. The others are the adapter and the ambassador pattern.
 
 
+InitContainers
+
+In a multi-container pod, each container is expected to run a process that stays alive as long as the POD's lifecycle. 
+For example in the multi-container pod that we talked about earlier that has a web application and logging agent, -
+both the containers are expected to stay alive at all times. 
+The process running in the log agent container is expected to stay alive as long as the web application is running. 
+If any of them fails, the POD restarts.
+
+But at times you may want to run a process that runs to completion in a container. 
+For example a process that pulls a code or binary from a repository that will be used by the main web application.
+That is a task that will be run only  one time when the pod is first created. 
+Or a process that waits  for an external service or database to be up before the actual application starts.
+That's where initContainers comes in.
 
 
-
-
+Practice test:  Init containers:
+  
+1. Identify the pod that has an initContainer configured. = blue (kubectl describe pod blue
+2. What is the image used by the initContainer on the blue pod? = busybox
+3. What is the state of the initContainer on pod blue = Terminated
+4. Why is the initContainer terminated? What is the reason? = completed
+5. We just created a new app named purple. How many initContainers does it have? = 2
+6. Status of InitContainer = Pending
+7. How long after the creation of the POD will the application come up and be available to users? = 30. min                                                             
+8. Update the pod red to use an initContainer that uses the busybox image and sleeps for 20 seconds = 
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: red
+  namespace: default
+spec:
+  containers:
+  - command:
+    - sh
+    - -c
+    - echo The app is running! && sleep 3600
+    image: busybox:1.28
+    name: red-container
+  initContainers:
+  - image: busybox
+    name: red-initcontainer
+    command: 
+      - "sleep"
+      - "20"
+9. A new application orange is deployed. There is something wrong with it. Identify and fix the issue.
+   Once fixed, wait for the application to run before checking solution.
+   = sleep was incorrectly spelt under InitContainer
+   = kubectl replace --force -f /tmp/kubectl-edit-1771838300.yaml     
+                                                                  
+There is a typo in the command used by the initContainer. 
+To fix this, first get the pod definition file by running kubectl get pod orange -o yaml > /root/orange.yaml.
+Next, edit the command and fix the typo.
+Then, delete the old pod by running kubectl delete pod orange
+Finally, create the pod again by running kubectl create -f /root/orange.yaml                                                               
+                                                                  
+                                                                
 
 
 
