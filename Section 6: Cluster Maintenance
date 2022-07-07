@@ -51,3 +51,13 @@ Practice test: OS Upgrade
     = kubectl cordon node01
 
 Make sure that hr-app is not affected.
+
+kubernetes version:
+
+example:
+v1.11.3
+1 = Major version
+11 = minor version
+3 = patch
+
+
