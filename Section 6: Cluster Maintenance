@@ -1,1 +1,15 @@
 
+OS Upgrades:
+
+Scenerio:
+- If you had 1 Master node and 3 worker nodes
+- Worker 1 has 3 application on 2 application running on it, blue and green, if this worker node went down, application blue -
+  would be fine since its also running on another worker node however cause green is only running on 1 worker node, users will be impacted, 
+  what will happen?
+- If the worker node,comes up quickly the kubelet will place the application on Worker 1 again.
+- However if 5 min have passed the kubelet will terminate these pods. 
+- of the pods were part of a replicaset, they are recreated on another worker node.
+- The time it waits for a pod to come online, is called a 'Pod eviction timeout' default value of 5 min. 
+- When a node goes offline, the master node waits 5 min to consider the worker node being dead. 
+- When the node comes back online after the podeviction timeout, it comes back blank with no pods on it. 
+- so since the green pod was not part of a replicaset, it would automatically disapear since it past the podeviction period and not part of the replicatset. 
