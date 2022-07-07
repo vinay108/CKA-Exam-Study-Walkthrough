@@ -12,4 +12,7 @@ Scenerio:
 - The time it waits for a pod to come online, is called a 'Pod eviction timeout' default value of 5 min. 
 - When a node goes offline, the master node waits 5 min to consider the worker node being dead. 
 - When the node comes back online after the podeviction timeout, it comes back blank with no pods on it. 
-- so since the green pod was not part of a replicaset, it would automatically disapear since it past the podeviction period and not part of the replicatset. 
+- so since the green pod was not part of a replicaset, it would automatically disapear since it past the podeviction period and not part of the replicatset.
+- Since we do not know that a node will be back online within 5 min or at all.
+    - You can drain the nodes to put the pods on other nodes gracefully. they are simply recreated on another node. 
+    -  kubectl drain node-1, the node which is being upgraded 
