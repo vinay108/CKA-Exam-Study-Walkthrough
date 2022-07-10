@@ -60,4 +60,20 @@ v1.11.3
 11 = minor version
 3 = patch
 
+Cluster Process:
 
+- Each kubernetes component have their version of software
+- kube-api-server
+  controller-manager 
+  kube-scheduler
+  kubelet
+  kube-proxy
+  kubectl
+  etcd cluster
+  CoreDNS
+  
+- Each componenet can run on different versions not mandotory
+- kube-api server is the main component where all other components talk to, they cannot be higher than the Kube-API Server
+- However the kube-controller can be a version higher than kube api-server or even same leve. 
+- recommended approach when upgrading is to upgrade 1 minor version at a time 
+- 
