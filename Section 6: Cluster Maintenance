@@ -76,4 +76,34 @@ Cluster Process:
 - kube-api server is the main component where all other components talk to, they cannot be higher than the Kube-API Server
 - However the kube-controller can be a version higher than kube api-server or even same leve. 
 - recommended approach when upgrading is to upgrade 1 minor version at a time 
-- 
+- If cluster is managed on cloud providers, for example google kubernetes engine lets you upgrade with few clicks
+- if cluster is deployed kube-adm, tools can help you upgrade from stratch.
+- if deployed from scratch, manually upgrade each components. 
+- upgrading 2 concepts:
+  - upgrade master nodes
+  - than worker nodes
+- whilst master nodes are being upgraded, control plane components such as API Server, sheduler and controller manager go down briefly. 
+- master being down doesnt mean worker nodes are affected, all work loads continue serving request, during this time you cannot deploy new appications or -
+  delete or configure existing ones.
+- Since Master is down, all mgmt functions will be down and cannot access cluster using kubectl or other kube api, create new applications. 
+- if pod was to fail during this time, new pods wont come up. 
+- once master comes up, it should function properly again.
+
+Strategies in upgrading cluster:
+Solution 1:
+
+- Upgrading all worker nodes at once, however all workloads are down and users can no longer access the application.
+  once nodes are back up, everything should function as normal.
+  
+Solution 2:
+
+- Upgrade 1 node at a time 
+  - upgrade 1 node at a time
+  - workloads move to other nodes
+ 
+
+
+
+
+
+
