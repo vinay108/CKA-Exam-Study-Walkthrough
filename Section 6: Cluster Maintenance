@@ -102,6 +102,45 @@ Solution 2:
   - workloads move to other nodes
  
 
+Solution 3:
+
+- Add new nodes to the cluster
+- These nodes with newer software more convenient when your on a cloud enviroment where you can easily provision new nodes and deprevision old ones.
+- move workloads to the new node and then delete old one
+
+Kubeadm upgrade plan command:
+
+- kubeadm does not install or upgrade kubelet
+- must also upgrade kubeadm also 
+
+To upgrade worker node via kubadm:
+
+1. Drain node
+2. Upgrade kubeadm
+3. Upgrade kubelet
+4. restart kubelet service
+5. kubectl uncordon
+
+Practice test: Cluster Upgrade
+
+1. This lab tests your skills on upgrading a kubernetes cluster. We have a production cluster with applications running on it. 
+   Let us explore the setup first. What is the current version of the cluster? = kubeadm upgrade plan v1.19.0
+2. How many nodes are part of this cluster? kubectl get nodes = 2
+3. How many nodes can host workloads in this cluster? = 2 since no taints places on Masternode
+4. How many applications are hosted on the cluster? = kubectl get deployments --all-namespaces = 1
+5. What nodes are the pods hosted on? = Controlplane & node01
+6. You are tasked to upgrade the cluster. User's accessing the applications must not be impacted. 
+   And you cannot provision new VMs. What strategy would you use to upgrade the cluster = Upgrade 1 node at a time and move workloads to other nodes
+7. What is the latest stable version available for upgrade? = Latest stable version: v1.19.16
+8. We will be upgrading the master node first. Drain the master node of workloads and mark it UnSchedulable
+   = kubectl drain controlplane
+9.
+10.
+11.
+12.
+13. 
+
+
 
 
 
