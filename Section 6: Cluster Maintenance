@@ -133,13 +133,57 @@ Practice test: Cluster Upgrade
    And you cannot provision new VMs. What strategy would you use to upgrade the cluster = Upgrade 1 node at a time and move workloads to other nodes
 7. What is the latest stable version available for upgrade? = Latest stable version: v1.19.16
 8. We will be upgrading the master node first. Drain the master node of workloads and mark it UnSchedulable
-   = kubectl drain controlplane
-9.
-10.
-11.
-12.
-13. 
+   = kubectl drain controlplane --ignore-daemonsets
+9. Upgrade the controlplane components to exact version v1.20.0, Upgrade kubeadm tool (if not already), then the master components, 
+   and finally the kubelet. Practice referring to the kubernetes documentation page. 
+   Note: While upgrading kubelet, if you hit dependency issue while running the apt-get upgrade kubelet command, 
+   use the apt install kubelet=1.20.0-00 command instead
+   = 
+   On the controlplane node, run the command run the following commands:
 
+apt update
+This will update the package lists from the software repository.
+
+apt install kubeadm=1.20.0-00
+This will install the kubeadm version 1.20
+
+kubeadm upgrade apply v1.20.0
+This will upgrade kubernetes controlplane. Note that this can take a few minutes.
+
+apt install kubelet=1.20.0-00 This will update the kubelet with the version 1.20.
+
+You may need to restart kubelet after it has been upgraded.
+Run: systemctl restart kubelet
+
+
+10. Mark the controlplane node as "Schedulable" again = kubectl uncordon controlplane 
+11. Next is the worker node. Drain the worker node of the workloads and mark it UnSchedulable = kubectl drain node01 --ignore-daemonsets12.
+12. Upgrade the worker node to the exact version v1.20.0 = 
+
+On the node01 node, run the command run the following commands:
+
+If you are on the master node, run ssh node01 to go to node01
+
+
+apt update 
+This will update the package lists from the software repository.
+
+apt install kubeadm=1.20.0-00
+This will install the kubeadm version 1.20
+
+kubeadm upgrade node
+This will upgrade the node01 configuration.
+
+apt install kubelet=1.20.0-00 This will update the kubelet with the version 1.20.
+
+You may need to restart kubelet after it has been upgraded.
+Run: systemctl restart kubelet
+
+Type exit or enter CTL + d to go back to the controlplane node.
+
+
+13. Remove the restriction and mark the worker node as schedulable again.
+    = kubectl uncordon node01
 
 
 
