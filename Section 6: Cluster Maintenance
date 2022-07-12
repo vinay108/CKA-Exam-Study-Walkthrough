@@ -186,7 +186,10 @@ Type exit or enter CTL + d to go back to the controlplane node.
     = kubectl uncordon node01
 
 
+Backup and Restore Method:
 
+- All config stored on ETCD
+- 
 
 
 
