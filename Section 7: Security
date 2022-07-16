@@ -1,1 +1,35 @@
+Security Primitives:
+!
+!
+- Root based disabled
+- Password based authentication disabled
+- kube-apiserver first line of defence, controlling access to api-server itself
 
+Authentication:
+who can access the api-server? 
+- Username and password stored in file
+- username and tokens 
+- cert
+- LDAP
+- Service accounts
+
+Authorisation:
+What can they do
+- RBAC Authorisation
+- ABAC Authorisation
+- Node Authorisation 
+- Webhook Mode
+
+- All components talking to Kube-Api Server is secured via tls encryption 
+- communicaton between application, pod within the cluster, can access all other pods within the cluster
+  can restrict using network policies 
+  
+  Authentication:
+  
+  
+  
+  
+  
+  
+  
+  
