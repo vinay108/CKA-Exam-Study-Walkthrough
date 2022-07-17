@@ -26,7 +26,26 @@ What can they do
   
   Authentication:
   
+  Access to K8s cluster:
+  Admin - Users
+  Developers - Users
+  End users
+  Bots - Service accounts since this is 3rd party
   
+  - k8s does not manage users account nativlely 
+  - cannot create users on clusters
+  
+  - Can create service accounts however for bots etc
+  
+  user access:
+  
+  - All user access is managed by the kubernetes api-server 
+  - Api servers authenticate users before processing
+  - kube-apiserver authenticates 
+    - static password file = create user/passwords in csv file 
+    - static token file    = 
+    - certificates
+    - identity services
   
   
   
