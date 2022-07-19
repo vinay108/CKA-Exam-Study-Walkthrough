@@ -156,6 +156,44 @@ curl -v -k https://localhost:6443/api/v1/pods -u "user1:password123"
    - the users browser than encrypts the symmetric key provided by the servers public key
    - Private key is never sent over transit
    - Private key is used to dencrypt 
+   
+   - Ensure integrity by using Certificates
+   - Certificate contains, who the cert is issued too, location 
+     - Name on it / Subject 
+     - if you assign a certificate, it is called a self signed certificate
+     - Cert authority can assign certs
+       - Generate CSR 
+         - Using open ssl for example
+     - Validate information provided 
+     - sign and send certificate
+     - if hacker tried to validate his certificate, it would fail and be rejected
+     
+     - How do you know, cert signed by Symantec etc, 
+       - They have their own public and private keys pairs
+         - private keys to sign certificates
+         - public keys hosted in browsers built in, using public key of CA if actually
+           signed by CA
+           
+    - For Internal sites, private links, Private CAs can be hosted on prem, to validate
+      private on-prem connections. 
+      
+    1. To encrypt messages use assymmetric keys
+    2. Admin uses pair of keys to connect to servers via ssh
+    3. Server uses pair of keys to secure https traffic
+    4. server first sends CSR to CA, 
+    5. The CA uses its private keys to sign CSR
+    6. The signing Certificate is than sent back to the server, 
+    7. server than configures web application with new certitificate 
+    8. To communicate with client, server first sends its certificate with its public key 
+    9. 
+    
+     
+     
+     
+     
+     
+     
+     
  
  
   
