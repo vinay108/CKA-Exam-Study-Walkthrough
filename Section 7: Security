@@ -185,7 +185,22 @@ curl -v -k https://localhost:6443/api/v1/pods -u "user1:password123"
     6. The signing Certificate is than sent back to the server, 
     7. server than configures web application with new certitificate 
     8. To communicate with client, server first sends its certificate with its public key 
-    9. 
+    9. Users browser reads the certificate and uses the CAs public key to validate and retrieve
+       the servers public key
+   10. Than generates a symmetric key that it wishes to use going forward for communication 
+   11. The symmetric key is encrypted using the servers public key and sent back to the server 
+        
+    12. The server uses its private key to decrypt the message and return the symmetric key
+        the symmetric key is used for communication 
+    
+    How does the server trust the client:
+    
+    1. The server can request the clients certificate
+    2. Client generates pair of keys and signed certificate from a verified CA
+    3. Client than sends the client certificate to the server for it to verify the client is 
+       who they are
+  
+    
     
      
      
