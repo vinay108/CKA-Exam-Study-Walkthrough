@@ -241,9 +241,51 @@ curl -v -k https://localhost:6443/api/v1/pods -u "user1:password123"
     - The kube-apiserver also communicates with the kubelet thats how it monitors each worker nodes.
       can use orignal cert key or new ones 
    
+   - Generate certificate by using a CA, at least 1 for your k8s cluster and 1 specifically for ETCD, signed by 
+     ETCD CA. 
+     
+   - Usually require 2 certificates, 1 for client certificates and 1 for server side certificates
+     - All componenets speaking to API-Server = Client cert and Key
+     - API-Server Speaking to ETCD = Client Cert and key 
+     - API-SERVER & ETCD Acting as Server 
+     
+   Certification creation:
    
+   Many ways in generating certificates for kubernetes cluster
+   - Tools such as 
+     - EASYRSA
+     - OPENSSL
+     - CFSSL
    
-   
+    - Main focus is OPENSSL
+    1. Starting with CA Certificates
+    2. Create private key using command openssl genrsa -out ca key 2048
+    3. CSR Request = openssl req -new -key ca.key -subj "/CN=KUBERNETES-CA" -out ca.csr
+    4. Sign cert by this command, openssl x509 -req -in ca.csr -signkey ca
+    5. The CA now has its private key and root certificate
+    6. now creating a client certificate using openssl genrsa -out admin.key 2048
+    7. CSR Request = openssl req -new -key admin.key -subj "/CN=kube-admin/o=system:masters" -out admin.csr
+    8. Sign cert by this command, openssl x509 -req -in admin.csr -CA ca.crt -CAkey ca.key -out admin.crt
+       specifiy the CA certificate and CA key makes it valid certificate and outputting admin.crt file
+    
+    Kube-Scheduler / kube-controller must have name system in the certificate 
+    
+    To use the above certificates such as Admin certificates
+    1. Can call an API Call, specify key 
+    2. Or put it in a Kubeconfig, all of the config 
+    
+    - For clients to validate certificates sent by the server and vise verse they all need copy CA Public 
+      certificate usually installed in web browser to communicate you must specify in all components root -
+      certificate 
+      
+      Server side certificate:
+      
+      - if you have multiple ETCD clusters, must specify peering certificates 
+      - Kube-APIServer
+        1. Create private key using command openssl genrsa -out apiserver.key 2048
+        2. CSR Request = openssl req -new -key apiserver.key -subj "/CN=kube-apiserver" -out apiserver.csr
+        3. Sign cert by this command, openssl x509 -req -in apiserver.csr -CA ca.crt -CAkey ca.key -out 
+        apiserver.crt
     
      
      
