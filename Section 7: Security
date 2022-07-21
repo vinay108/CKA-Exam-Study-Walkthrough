@@ -220,12 +220,26 @@ curl -v -k https://localhost:6443/api/v1/pods -u "user1:password123"
      generate key pair, called apiserver.crt and apiserver.key
      
    - etcd requires pairs of certificate and key also etcdserver.crt
-   - kubelet also requires cert and key pair lubelet.crt
+   - kubelet also requires cert and key pair kubelet.crt
    
    - client or admin requires cert and key pair to authenticate to kube-apiserver
    - kube scheduler talks to the kube-apiserver to look for pods which requires scheduling and get the 
      kube api server to schedule the pods to nodes. 
+   - The scheduler is a client act as the kube-apiserver from the kube-apiserver perspective the kube scheduler
+     is just another client
+     
+   - The kube-scheduler needs to valides its identiy using client certificate and key scheduler.crt and key 
    
+   - The kube controler manager also requires a client cert and key to validate identity 
+   
+   - Kube-proxy also requires a cert and key to authenticate to kube-api server 
+   
+   - Kube-APIServer communicates with the ETCD server is the only one which speaks to the ETCD Server 
+     in this case the kube-api-server is the client can either use the existing cert and key or specifically 
+     new ones just for communication to the ETCD. 
+     
+    - The kube-apiserver also communicates with the kubelet thats how it monitors each worker nodes.
+      can use orignal cert key or new ones 
    
    
    
