@@ -286,9 +286,22 @@ curl -v -k https://localhost:6443/api/v1/pods -u "user1:password123"
         2. CSR Request = openssl req -new -key apiserver.key -subj "/CN=kube-apiserver" -out apiserver.csr
         3. Sign cert by this command, openssl x509 -req -in apiserver.csr -CA ca.crt -CAkey ca.key -out 
         apiserver.crt
+        
+   Kubelet server:
+   
+   1. Require key cert pair for each node in the cluster
+   2. name each node after the node of the names
+   3. once cert created, use in kubelet config file 
+   4. must be done by each node in the cluster 
+   5. Client certificates to communicate with the kube-api server 
     
      
-     
+   TLS Certificates: Viewing certs
+   
+   1. Hardway = generate cert to yourself
+   2. Kubeadm = easier way 
+   3. Cluster deployed by Kubeadm 
+   - cat /etc/kubernetes/manifests/kube-apiserver.yaml
      
      
      
