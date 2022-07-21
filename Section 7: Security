@@ -201,9 +201,35 @@ curl -v -k https://localhost:6443/api/v1/pods -u "user1:password123"
        who they are
   
     
-    Security Kubernetes with TLS:
+   Security Kubernetes with TLS:
     
-    
+   - Previously we saw a CA, have their own public and private key-pairs to sign server certificates
+     this is called a 'root certificate' 
+     
+   - A server can request a client certificate using client certificates
+   - 3 types of certificates Server certificate, Client Certificate, Root certificates 
+   - *crt or * pem = public key
+   - *key or *key.pem = private key
+   
+   - K8s cluster containes set of master and worker nodes, communication between all needs to be secure and -
+     encrypted 
+     
+   - Client must secure tls connection to components.
+   
+   - Kube-API-Server exposes https service, it is a server and request certificate to secure the service.
+     generate key pair, called apiserver.crt and apiserver.key
+     
+   - etcd requires pairs of certificate and key also etcdserver.crt
+   - kubelet also requires cert and key pair lubelet.crt
+   
+   - client or admin requires cert and key pair to authenticate to kube-apiserver
+   - kube scheduler talks to the kube-apiserver to look for pods which requires scheduling and get the 
+     kube api server to schedule the pods to nodes. 
+   
+   
+   
+   
+   
     
      
      
