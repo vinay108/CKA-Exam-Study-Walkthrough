@@ -303,9 +303,60 @@ curl -v -k https://localhost:6443/api/v1/pods -u "user1:password123"
    3. Cluster deployed by Kubeadm 
    - cat /etc/kubernetes/manifests/kube-apiserver.yaml
      
-     
-     
-     
+   Practice test: View certificate details
+   
+   1. Identify the certificate file used for the kube-api server = 
+      cat /etc/kubernetes/manifests/kube-apiserver.yaml | grep tls-cert
+       - --tls-cert-file=/etc/kubernetes/pki/apiserver.crt
+   2. Identify the Certificate file used to authenticate kube-apiserver as a client to ETCD Server
+      cat /etc/kubernetes/manifests/kube-apiserver.yaml | grep etcd-cert
+       - --etcd-certfile=/etc/kubernetes/pki/apiserver-etcd-client.crt
+   3. Identify the ETCD Server Certificate used to host ETCD server = 
+   
+   4. Identify the ETCD Server Certificate used to host ETCD server
+      root@controlplane /etc/kubernetes/pki ➜  cat /etc/kubernetes/manifests/etcd.yaml | grep cert-file    - --cert-file=/etc/kubernetes/pki/etcd/server.crt
+    - --peer-cert-file=/etc/kubernetes/pki/etcd/peer.crt
+   
+   5. Identify the ETCD Server CA Root Certificate used to serve ETCD Server
+      ETCD can have its own CA. So this may be a different CA certificate than the one used by kube-api server.
+      Look for CA Certificate (trusted-ca-file) in file /etc/kubernetes/manifests/etcd.yaml
+      
+   6. What is the Common Name (CN) configured on the Kube API Server Certificate?
+      OpenSSL Syntax: openssl x509 -in file-path.crt -text -noout 
+      = Run the command openssl x509 -in /etc/kubernetes/pki/apiserver.crt -text and look for Subject CN.
+      
+   7. What is the name of the CA who issued the Kube API Server Certificate?
+      = kubernetes
+      
+   8. Which of the below alternate names is not configured on the Kube API Server Certificate?
+      = Run the command openssl x509 -in /etc/kubernetes/pki/apiserver.crt -text and look at Alternative Names
+      
+   9. What is the Common Name (CN) configured on the ETCD Server certificate?
+      = Run the command openssl x509 -in /etc/kubernetes/pki/etcd/server.crt -text and look for Subject CN.
+      
+   10. How long, from the issued date, is the Kube-API Server Certificate valid for?
+       File: /etc/kubernetes/pki/apiserver.crt
+       = Run the command openssl x509 -in /etc/kubernetes/pki/apiserver.crt -text and check on the Expiry date.
+       
+   11. How long, from the issued date, is the Root CA Certificate valid for?
+       File: /etc/kubernetes/pki/ca.crt
+       = openssl x509 -in /etc/kubernetes/pki/ca.crt -text
+       
+   12. Kubectl suddenly stops responding to your commands. Check it out! Someone recently modified the /etc/kubernetes/manifests/etcd.yaml file
+       You are asked to investigate and fix the issue. Once you fix the issue wait for sometime for kubectl to respond. Check the logs of the ETCD container.
+       The certificate file used here is incorrect. It is set to /etc/kubernetes/pki/etcd/server-certificate.crt which does not exist. As we saw in the previous questions the correct path should be /etc/kubernetes/pki/etcd/server.crt.
+
+       root@controlplane:~# ls -l /etc/kubernetes/pki/etcd/server* | grep .crt
+       -rw-r--r-- 1 root root 1188 May 20 00:41 /etc/kubernetes/pki/etcd/server.crt
+       root@controlplane:~# 
+       Update the YAML file with the correct certificate path and wait for the ETCD pod to be recreated. wait for the kube-apiserver to get to a Ready state.
+
+       NOTE: It may take a few minutes for the kubectl commands to work again so please be patient.
+       
+   13. The kube-api server stopped again! Check it out. Inspect the kube-api server logs and identify the root cause and fix the issue.
+       Run docker ps -a command to identify the kube-api server container. Run docker logs container-id command to view the logs.
+
+
      
  
  
