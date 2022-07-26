@@ -355,10 +355,56 @@ curl -v -k https://localhost:6443/api/v1/pods -u "user1:password123"
        
    13. The kube-api server stopped again! Check it out. Inspect the kube-api server logs and identify the root cause and fix the issue.
        Run docker ps -a command to identify the kube-api server container. Run docker logs container-id command to view the logs.
+      
+       If we inspect the kube-apiserver container on the controlplane, we can see that it is frequently exiting.
 
+      root@controlplane:~# docker ps -a | grep kube-apiserver
+      8af74bd23540        ca9843d3b545           "kube-apiserver --ad…"   39 seconds ago      Exited (1) 17 seconds ago                          k8s_kube-apiserver_kube-apiserver-controlplane_kube-system_f320fbaff7813586592d245912262076_4
+      c9dc4df82f9d        k8s.gcr.io/pause:3.2   "/pause"                 3 minutes ago       Up 3 minutes                                       k8s_POD_kube-apiserve-controlplane_kube-system_f320fbaff7813586592d245912262076_1
+      root@controlplane:~# 
+      If we now inspect the logs of this exited container, we would see the following errors:
 
+      root@controlplane:~# docker logs 8af74bd23540  --tail=2
+      W0520 01:57:23.333002       1 clientconn.go:1223] grpc: addrConn.createTransport failed to connect to {https://127.0.0.1:2379  <nil> 0 <nil>}. Err :connection error: desc = "transport: authentication handshake failed: x509: certificate signed by unknown authority". Reconnecting...
+      Error: context deadline exceeded
+      root@controlplane:~# 
+      This indicates an issue with the ETCD CA certificate used by the kube-apiserver. Correct it to use the file /etc/kubernetes/pki/etcd/ca.crt.
+
+      Once the YAML file has been saved, wait for the kube-apiserver pod to be Ready. This can take a couple of minutes.
+   
      
+ Certificate API:
  
+ - A new admin comes in to and wants access to the cluster, requires cert key pair to access the -
+   cluster, 1. creates own private key, 2. generates CSR request and sends to admin, 3. take cert to ca server signed by ca private key and root cert
+   and sends back to user. 
+   
+ - Access does expire.
+ 
+ - CA, is just a pair key and cert files generated, whoever has acces to these files can create
+   as many users as possible.
+  
+ - Files need to be protected, placed in a server this is called a CA.
+ - kubeadm does the same thing, it creates CA pair of files and stores in master node itself 
+ 
+ - So far we have been creating certificates manually, however when users grow, you want to automate this process
+   kubernetes has its own certificate API.
+   
+ - Now you send certitificate request to kubernetes api through an api call, this time when the admin recieves the request
+   instead of logging into the CA Manually via the master node now creates a kubernetes API object called -
+   certificates signing request, once object is created this can be seen by all admin users of th cluster and reviewed 
+   and approved, can than be extracted and shared. 
+   1. User create key and gene CSR request with Key
+   2. Send request to admin 
+   3. admin takes key and creates certficate signing request
+   4. created using manifest file
+   5. request field is where you the csr sent by users encoded using base64 command and put this in the request field
+   6. submit request
+   7. now can be seen by admin using kubectl get csr command 
+   8. can approve cert by kubeclt certificate approve command 
+   9. generates new cert for user 
+   10. kubectl grt csr jane -o yaml
+   11. Controller manager looks after all the CSR request etc 
  
   
   
