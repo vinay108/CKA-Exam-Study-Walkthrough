@@ -459,6 +459,50 @@ curl -v -k https://localhost:6443/api/v1/pods -u "user1:password123"
   9. Let's get rid of it. Delete the new CSR object
      kubectl delete csr agent-smith
   
-  10.
-  
+ Kube-Config:
+ 
+ - moving certificate config file to KubeConfig file
+   kubectl get pods 
+      --kubeconfig config
+   
+ - kubeconfig file is in a specific format
+ - 3 sections 
+   - clusters: various k8s clusters need access too, 
+     development, production, google. 
+   - contexts: users which have access to account, which user account to be used for which cluster
+   - users: existing users for existing privelieges to access what cluster they are accessing
+   
+   - Servers specifis go into cluster section
+   - admin user keys / certificate go into users sections.
+   - than create context use mykube admin users to access mykube cluster
+   
+   Kube-Config Quiz:
+   
+   1. Where is the default kubeconfig file located in the current environment?
+      Find the current home directory by looking at the HOME environment variable.
+      = /root/.kube  
+   2. How many clusters are defined in the default kubeconfig file? 1 = kubernetes
+   3. How many Users are defined in the default kubeconfig file? = 1 kubernetes-admin
+   4. How many context are defined in the default kubeconfig file? = 1 kubernetes-admin@kubernetes
+   5. What is the user configured in the current context? = kubernetes-admin
+   6. What is the name of the cluster configured in the default kubeconfig file?
+      = kubernetes
+   7. A new kubeconfig file named my-kube-config is created. It is placed in the /root directory. How many clusters are defined in that kubeconfig file?
+      = 4
+   8. How many contexts are configured in the my-kube-config file? 4
+   9. What user is configured in the research context? dev-user
+   10. What is the name of the client-certificate file configured for the aws-user?
+       client-certificate: /etc/kubernetes/pki/users/aws-user/aws-user.crt
+   11. What is the current context set to in the my-kube-config file?
+       = test-user@development
+   12. I would like to use the dev-user to access test-cluster-1. Set the current context to the right one so I can do that.
+       Once the right context is identified, use the kubectl config use-context command.
+       = To use that context, run the command: kubectl config --kubeconfig=/root/my-kube-config use-context research
+        To know the current context, run the command: kubectl config --kubeconfig=/root/my-kube-config current-context
+   13. We don't want to have to specify the kubeconfig file option on each command. Make the my-kube-config file the default kubeconfig.
+       Replace the contents in the default kubeconfig file with the content from my-kube-config file.
+   14. With the current-context set to research, we are trying to access the cluster. However something seems to be wrong. Identify and fix the issue.
+       Try running the kubectl get pods command and look for the error. All users certificates are stored at /etc/kubernetes/pki/users.
+       = 
+   
   
