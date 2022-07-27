@@ -503,6 +503,6 @@ curl -v -k https://localhost:6443/api/v1/pods -u "user1:password123"
        Replace the contents in the default kubeconfig file with the content from my-kube-config file.
    14. With the current-context set to research, we are trying to access the cluster. However something seems to be wrong. Identify and fix the issue.
        Try running the kubectl get pods command and look for the error. All users certificates are stored at /etc/kubernetes/pki/users.
-       = 
+       = The path to certificate is incorrect in the kubeconfig file. Correct the certificate name which is available at /etc/kubernetes/pki/users/.
    
   
