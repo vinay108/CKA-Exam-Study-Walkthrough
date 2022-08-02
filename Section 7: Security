@@ -543,6 +543,8 @@ API Groups:
     command = kubectl proxy 
     curl http://localhost:8001 -k
     
- - kube proxy = enables connectivity between pods and services accross different nodes in cluster
- - kubectl proxy = http proxy services created 
+ - kube proxy = enables connectivity between pods and services across different nodes in cluster
+ - kubectl proxy = http proxy services created by kubectl to access kube-api server. 
+ 
+ 
 
