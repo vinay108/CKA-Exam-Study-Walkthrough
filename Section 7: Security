@@ -505,4 +505,44 @@ curl -v -k https://localhost:6443/api/v1/pods -u "user1:password123"
        Try running the kubectl get pods command and look for the error. All users certificates are stored at /etc/kubernetes/pki/users.
        = The path to certificate is incorrect in the kubeconfig file. Correct the certificate name which is available at /etc/kubernetes/pki/users/.
    
+API Groups:
+
+- To access API: Can do this: 
+  Curl https://kube-master:6443/version = To see version
+  Curl https://kube-master:6443/api/v1/pods = List of pods
   
+- APIs are grouped into several groups:
+  /metrics
+  /healthz
+  /version
+  
+  /api:
+  v1/namespaces/pods/rc/events/endpoints/nodes/bindings/PV/PVC/configmaps/secrets
+  
+  /services:
+  
+  /apis:
+  Apps/ = deploymnents / replicasets / statefulsets
+  extensions/ = 
+  networking.k8s.io = network policies
+  /storage.k8s.io = 
+  /authentication.k8s.io =
+  /certifices.k8s.io = certificatessigningrequests
+  
+  /logs
+  
+  - not allowed access to kube-api as you have not specified any authentication methods
+    have to authenticate using the following:
+    curl http://localhost:6443 -k 
+         --key admin.key
+         --cert admin.crt
+         --cacert ca.crt
+         
+  - Alternative option is to use or start a 'kubeproxy' client which uses ports 8001 locally. 
+    uses cresendials and certificates from kube-config files to access the cluster.
+    command = kubectl proxy 
+    curl http://localhost:8001 -k
+    
+ - kube proxy = enables connectivity between pods and services accross different nodes in cluster
+ - kubectl proxy = http proxy services created 
+
