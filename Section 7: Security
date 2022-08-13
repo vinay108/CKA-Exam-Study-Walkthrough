@@ -546,5 +546,29 @@ API Groups:
  - kube proxy = enables connectivity between pods and services across different nodes in cluster
  - kubectl proxy = http proxy services created by kubectl to access kube-api server. 
  
+ Authorization:
  
+ - Depending who is accessing what, needs to restrict users i.e with namespaces etc
+ - Authorization Mechanisms:
+   - Node: Kube-API is accessed by users for mgmt purposes aswell as kubelet.
+     The Kueblet acts as the api server to read information about services/endpoints/nodes/pods
+     also reports information to kube-api about node status/pod status/events.
+     request handled by special node authorizer 
+   - ABAC: Groups of users with set of permissions, for example 'Dev-User' can create pod / view pods and delete pods
+   - RBAC: define a role, for developers for example with set of permissions required for developers
+     then associate all developers to that role 
+   - WEBHOOK: If you want to manage an authorisation externally and built in mechanisms. Example 
+     Open Policy Agent, users can make a call to the Kube Api with info about users and access requirements
+     and have the Open Policy agent decide to permit or not. 
+   - AlwaysAllow - Allows all request without performing any auth checks
+   - AlwaysDeny - denies the request
+   
+  - Mode are set using the auth mode option on the kube-api server, if you dont change by default,
+    it is always 'AllowsAllow' 
+    
+ - Can change to multiple modes for example Node/RBAC/WEBHOOK 
+   goes in order i.e Node.
+   Everytime a module denies a request, it simply goes to the next one in the chain order 
+   as soon as request is accepted, that is it. 
+     
 
