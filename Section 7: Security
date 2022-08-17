@@ -624,5 +624,17 @@ roleRef:  <<<<<-------------------------- Ths is where you tie user role above t
 - kubectl auth can-i create pods --as dev-user
 - kubectl auth can-i create deployments --as dev-user
 
+Reasource name access: 
 
+- if you want to grant user access to only certain pods in namespace for example:
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: developer
+rules:
+- apiGroups [""]
+  resources: ["pods"]
+  verbs: ["list", "get', "create", "update", "delete"]
+  resourceNames: ["blue", "orange"]
 
