@@ -642,16 +642,25 @@ rules:
 Practice test: Test roles 
 
 1. Inspect the environment and identify the authorization modes configured on the cluster.
-   Check the kube-apiserver settings.
+   Check the kube-apiserver settings. = kubectl describe pods -n kube-system kube-apiserver-controlplane
    = Node / RBAC
-2. 
-3. 
-4.
-5. 
-6.
-7.
-8.
-9.
+2. How many roles exist in the default namespace? = kubectl get roles
+   No resources found in default namespace. = 0 
+3. How many roles exist in all namespaces together? = 12 
+4. What are the resources the kube-proxy role in the kube-system namespace is given access to?
+   = kubectl describe role kube-proxy -n kube-system = configmaps
+5. What actions can the kube-proxy role perform on configmaps? = Get
+6. Which of the following statements are true? = kube-Proxy role can get details of configmap 
+   object by the name kube-proxy only
+7. Which account is the kube-proxy role assigned to? = 
+   kubectl describe rolebinding  kube-proxy -n kube-system
+   = system:bootstrappers:kubeadm:default-node-token
+8. A user dev-user is created. User's details have been added to the kubeconfig file. Inspect the permissions granted to the user. Check if the user can list pods in the default namespace.
+   Use the --as dev-user option with kubectl to run commands as the dev-user.
+   = kubectl auth can-i get pods --as dev-user = no 
+9. Create the necessary roles and role bindings required for the dev-user to create, list and delete pods in the default namespace.
+   Use the given spec:
+   = 
 10
 11.
 
