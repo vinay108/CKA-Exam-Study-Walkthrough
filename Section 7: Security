@@ -481,7 +481,7 @@ curl -v -k https://localhost:6443/api/v1/pods -u "user1:password123"
    1. Where is the default kubeconfig file located in the current environment?
       Find the current home directory by looking at the HOME environment variable.
       = /root/.kube  
-   2. How many clusters are defined in the default kubeconfig file? 1 = kubernetes
+   2. How many clusters are defined in the default kubeconfig file? kubectl config view 1 = kubernetes
    3. How many Users are defined in the default kubeconfig file? = 1 kubernetes-admin
    4. How many context are defined in the default kubeconfig file? = 1 kubernetes-admin@kubernetes
    5. What is the user configured in the current context? = kubernetes-admin
@@ -493,7 +493,7 @@ curl -v -k https://localhost:6443/api/v1/pods -u "user1:password123"
    9. What user is configured in the research context? dev-user
    10. What is the name of the client-certificate file configured for the aws-user?
        client-certificate: /etc/kubernetes/pki/users/aws-user/aws-user.crt
-   11. What is the current context set to in the my-kube-config file?
+   11. What is the current context set to in the my-kube-config file? kubectl config current-context --kubeconfig my-kube-config
        = test-user@development
    12. I would like to use the dev-user to access test-cluster-1. Set the current context to the right one so I can do that.
        Once the right context is identified, use the kubectl config use-context command.
@@ -504,6 +504,7 @@ curl -v -k https://localhost:6443/api/v1/pods -u "user1:password123"
    14. With the current-context set to research, we are trying to access the cluster. However something seems to be wrong. Identify and fix the issue.
        Try running the kubectl get pods command and look for the error. All users certificates are stored at /etc/kubernetes/pki/users.
        = The path to certificate is incorrect in the kubeconfig file. Correct the certificate name which is available at /etc/kubernetes/pki/users/.
+       cert should be dev-user not developer-user. 
    
 API Groups:
 
@@ -637,4 +638,20 @@ rules:
   resources: ["pods"]
   verbs: ["list", "get', "create", "update", "delete"]
   resourceNames: ["blue", "orange"]
+
+Practice test: Test roles 
+
+1. Inspect the environment and identify the authorization modes configured on the cluster.
+   Check the kube-apiserver settings.
+   = Node / RBAC
+2. 
+3. 
+4.
+5. 
+6.
+7.
+8.
+9.
+10
+11.
 
