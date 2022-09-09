@@ -733,9 +733,55 @@ spec:
   - image: nginx
     name: nginx
       
-      
-      
-      
+Cluster roles:
+ 
+- Roles and Role binding are Namespaced meaning they are created within Namespace
+- Cluster scope = nodes / pvc / clusteroles / clusterrolebindings / certificatesigningrequests / namespaces
+- To see namespaced resources run this:
+  - kubectl api-resources --namespaced=true
+  - kubectl api-resources --namespaced=false
+- Clusterroles 
+  - cluster admin = can view nodes | can create nodes | can delete nodes 
+  - storage admin = can view pvs | can create pvcs | can delete pvcs 
+- cluster-admin-role.yaml:
+  apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRole
+  metadata: 
+       name: cluster-administrator
+  rules: 
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["list", "get", "create", "delete"]
+- kubectl create -f cluster-admin-role.yaml
+- next step is to link the user to that role, for this another object called cluster role binding:
+     
+  cluster-admin-role-binding.yaml
+  apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRoleBindinding
+  metadata: 
+       name: cluster-admin-role-binding
+  subjects:
+  - kind: User
+    name: cluster-admin
+    apiGroup: rbac.authorization.k8s.io
+  roleRef:
+    kind: ClusterRole
+    name: cluster-administrator
+    apiGroup: rbac.authorisation.k8s.io
+
+- Can also create cluster role for namespace so whatever is in the namespace, that is what the user has access too. 
+
+ Practice test: test-cluster-roles
+ 1. For the first few questions of this lab, you would have to inspect the existing ClusterRoles and ClusterRoleBindings that have been created in this cluster.
+    = kubectl get clusterrole
+ 2. How many ClusterRoles do you see defined in the cluster? = 69
+ 3. How many ClusterRoleBindings exist on the cluster? = 54 kubectl get clusterrolebindings --no-headers | wc -l
+ 4. What namespace is the cluster-admin clusterrole part of?  = Cluster roles are not based on namespaced and cluster wide
+ 5. What user/groups are the cluster-admin role bound to? = ubectl get clusterrolebindings cluster-admin -o wide = system:masters
+ 6. What level of permission does the cluster-admin role grant? = 
+ 7. 
+ 8. 
+
 
 
        
