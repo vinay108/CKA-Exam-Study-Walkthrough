@@ -729,3 +729,45 @@ rules:
   - create
   - delete
 
+Service accounts:
+
+- User accounts used by Humans, service accounts used by machines 
+- user account could be admin using admin account to access the cluster
+- service account used by an application to interact with the k8s cluster, example prometheus polls the kubernetes api for performance metrics
+  or jenkins using service account to deploy applications on the kubernetes api.
+- Example build a k8s dashboard build in python, build a list of pods querying k8s api, it requires to be authenticated using a service account
+  kubectl create service account 
+  kubernetes get service account
+- When the service account is first created
+  1. it first creates the object
+  2. than generates a token for the service account
+  3. then creates a secret object and stores that inside the secret object
+  4. secret object is then linked to the service account
+  5. So can create service account 
+     1. assign correct permissions using RBAC
+     2. Export service account tokens and use it to configure 3rd party application to authenticate to k8s api
+  6. But what if your application is actually hosted on the kubernetes itself?
+     1. This process can be made simple by automatically mounted the service token secret on the pod as a volume hosting the 3rd party application
+     2. Default service account created on each namespace 
+     3. When a new pod is created, the default service account and its token it mounted on the pod as volume mount. 
+     4. If you want to use another service account instead othe default, modify the pod manifest with service account field and specify new service account
+ 
+ Practice test: Service accounts
+ 
+ 1.
+ 2.
+ 3.
+ 4.
+ 5.
+ 6.
+ 7.
+ 8.
+ 9.
+ 10.
+ 11. 
+ 12. 
+ 13. 
+ 14. 
+     
+   
+- 
