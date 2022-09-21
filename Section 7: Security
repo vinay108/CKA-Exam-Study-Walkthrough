@@ -754,19 +754,59 @@ Service accounts:
  
  Practice test: Service accounts
  
- 1.
- 2.
- 3.
- 4.
- 5.
- 6.
- 7.
- 8.
- 9.
- 10.
- 11. 
- 12. 
- 13. 
+ 1. How many Service Accounts exist in the default namespace? = kubectl get serviceaccounts = 1
+ 2. What is the secret token used by the default service account? = kubectl describe serviceaccounts default = default-token-66p9c
+ 3. We just deployed the Dashboard application. Inspect the deployment. What is the image used by the deployment? 
+    = kubectl describe deployments web-dashboard = gcr.io/kodekloud/customimage/my-kubernetes-dashboard
+ 4. / 
+ 5. What is the state of the dashboard? Have the pod details loaded successfully? failed
+ 6. What type of account does the Dashboard application use to query the Kubernetes API? = Service accounts
+ 7. Which account does the Dashboard application use to query the Kubernetes API? = default
+ 8. Inspect the Dashboard Application POD and identify the Service Account mounted on it. = kubectl get pod web-dashboard-767bc588bc-xf2qp -o yaml
+    default
+ 9. At what location is the ServiceAccount credentials available within the pod? = /var/run/secrets/kubernetes.io/serviceaccount
+ 10. The application needs a ServiceAccount with the Right permissions to be created to authenticate to Kubernetes. 
+     The default ServiceAccount has limited access. Create a new ServiceAccount named dashboard-sa.
+     = kubectl create serviceaccount dashboard-sa
+ 11. We just added additional permissions for the newly created dashboard-sa account using RBAC.
+     If you are interested checkout the files used to configure RBAC at /var/rbac. We will discuss RBAC in a separate section.
+     
+ 12. Enter the access token in the UI of the dashboard application. Click Load Dashboard button to load Dashboard
+     Retrieve the Authorization token for the newly created service account , copy it and paste it into the token field of the UI.
+     To do this, run kubectl describe against the secret created for the dashboard-sa service account, copy the token and paste it in the UI.
+     = kubectl describe serviceaccounts dashboard-sa 
+ 13. You shouldn't have to copy and paste the token each time. The Dashboard application is programmed to read token from the secret mount location. However currently, the default service account is mounted. Update the deployment to use the newly created ServiceAccount
+     Edit the deployment to change ServiceAccount from default to dashboard-sa
+     = 
+     apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-dashboard
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: web-dashboard
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: web-dashboard
+    spec:
+      serviceAccountName: dashboard-sa
+      containers:
+      - image: gcr.io/kodekloud/customimage/my-kubernetes-dashboard
+        imagePullPolicy: Always
+        name: web-dashboard
+        ports:
+        - containerPort: 8080
+          protocol: TCP           
  14. 
      
    
