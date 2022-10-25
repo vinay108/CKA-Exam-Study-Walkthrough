@@ -824,7 +824,7 @@ Image Security:
   3. specify in container manifest / imagepull secrets = name
       
     
-Image securty quiz:
+Image security quiz:
 
 1. What secret type must we choose for docker registry?
    docker-registry
@@ -857,4 +857,20 @@ Run the command: kubectl create secret docker-registry private-reg-cred --docker
       - name: private-reg-cred
       dnsPolicy: ClusterFirst
 
+Docker Security:
 
+example
+- Host with docker installed on it / docker deamon / ssh process 
+- run ubuntu docker container runs a process sleeps for an hour
+- containers and host share the same kernal
+- containers are isolated using namespaces in linux
+- all the process are run in the host itself 
+- docker container in its own namespace and can only see its own processes
+- different process id in different namespaces [process isoloation]
+- by default docker runs processes in the root user 
+  - if you want to change user for process, can simply do this
+    docker run --user=1000 ubuntu sleep 3600
+- can change or enforce define docker image, time of creation, set the user to 1000
+- docker and host root users is different, not the same
+- by default docker run root user with limited capapilities 
+- can use the --cap-add command to run additonal priviledges 
