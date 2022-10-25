@@ -1000,12 +1000,128 @@ spec:
     - protocol: TCP
       port: 3306
 
+Developing network policies:
 
+- 
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: 
+   name: db-policy
+spec: 
+   podSelector:
+      matchLabels:
+         role: db
+   policyTypes:
+   - Ingress
+   ingress:
+   - from:
+     - podSelector:
+         matchLabels:
+           name: api-pod  <<<<<----------label of the pod
+     - namespaceSelector: <<<<<<-----can separate namespace + labels
+           matchLabels:
+             name: prod
+      - ipBlock:
+           cidr: 192.168.5.10/32
+    ports: 
+    - protocol: TCP
+      port: 3306
+      
+- stateful by default
 
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: 
+   name: db-policy
+spec: 
+   podSelector:
+      matchLabels:
+         role: db
+   policyTypes:
+   - ingress
+   - Egress
+   ingress:
+   - from:
+     - podSelector:
+         matchLabels:
+           name: api-pod  <<<<<----------label of the pod
+     ports:
+     - protocol: TCP
+       -port: 3306
+    egress: 
+    - to:
+      - ipBlock:
+           cidr: 192.168.5.10/32
+    ports: 
+    - protocol: TCP
+      port: 80
 
+Network Policy Quiz:
 
+1. How many network policies do you see in the environment?
+We have deployed few web applications, services and network policies. Inspect the environment.
+= 1
 
+2. What is the name of the Network Policy?
+   = payroll-policy
 
+3. Which pod is the Network Policy applied on?
+   = kubectl get pods --selector=name=payroll
+   = payroll
 
-
+4. What type of traffic is this Network Policy configured to handle?
+   = ingress
    
+5. What is the impact of the rule configured on this Network Policy?
+   = traffic from internal to port 8080 is allowed
+   
+6. What is the impact of the rule configured on this Network Policy?
+   = internal pods can access 8080 on payroll pod 
+
+8. Perform a connectivity test using the User Interface in these Applications to access the payroll-service at port 8080.   
+   = only internal apps can access payroll services. 
+ 
+9. Perform a connectivity test using the User Interface of the Internal Application to access the external-service at port 8080.
+   = success
+   
+10. Create a network policy to allow traffic from the Internal application only to the payroll-service and db-service.
+Use the spec given below. You might want to enable ingress traffic to the pod to test your rules in the UI.
+= 
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: internal-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      name: internal
+  policyTypes:
+  - Egress
+  - Ingress
+  ingress:
+    - {}
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          name: mysql
+    ports:
+    - protocol: TCP
+      port: 3306
+
+  - to:
+    - podSelector:
+        matchLabels:
+          name: payroll
+    ports:
+    - protocol: TCP
+      port: 8080
+
+  - ports:
+    - port: 53
+      protocol: UDP
+    - port: 53
+      protocol: TCP
+      
+ Note: We have also allowed Egress traffic to TCP and UDP port. This has been added to ensure that the internal DNS resolution works from the internal pod. Remember: The kube-dns service is exposed on port 53:
