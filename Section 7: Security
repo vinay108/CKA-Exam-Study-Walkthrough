@@ -951,5 +951,61 @@ spec:
     securityContext:
       capabilities:
         add: ["SYS_TIME", "NET_ADMIN"]
-        
+
+
+Network Policies:
+- ingress and egress
+- traffic to web server is ingress
+- traffic away or back to user is egress
+- ingress is always originated from user
+  egress is always internal traffic egress traffic such as api to database server
+- all pods are in a virtual private network, all by defaults pods, can reach each other
+- default rules pod to pod within cluster all allowed by default
+- What if we didnt want pods to talk to each other and restrict access,
+- network policy is another object within the k8 namespace, like pod, replicsets
+  link network policy with one or more pods.
+- labels and selectors are used to create network policies
+  podSelector:
+    matchLabels: 
+       role: db
+  labels:
+    role: db
+- policyTypes:
+  - Ingress
+  ingress
+  - from:
+    - podSelector:
+        matchLabels:
+           name: api-pod
+    ports:
+    - protocol: TCP
+      port: 3306
+- 
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: 
+   name: db-policy
+spec: 
+   podSelector:
+      matchLabels:
+         role: db
+   policyTypes:
+   - Ingress
+   ingress:
+   - from:
+     - podSelector:
+         matchLabels:
+           name: api-pod
+    ports: 
+    - protocol: TCP
+      port: 3306
+
+
+
+
+
+
+
+
+
    
