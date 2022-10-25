@@ -810,7 +810,19 @@ spec:
  14. 
      
 Image Security:
-
+- Pod manifest file with 'nginx image' container.
+- name is 'nginx'
+- follow docker image convention, image is repository name it is actually -
+  library - defauly account where docker images are stored.
+- Images are stored and pulled from = Docker registery = docker.io this is where or by default
+  is pulled from.
+- Private repository = authenticated by credentials.
+- to use image from private reg = in containers manifest file, you mention the name of the private repository.
+  k8s gets the credentials to pull the private reg,
+  1. need to create secret / docker registery 'regcred'
+  2. server / user / pass / email
+  3. specify in container manifest / imagepull secrets = name
+  
 
 
 
