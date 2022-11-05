@@ -1,0 +1,34 @@
+Docker storage: 
+2 Processes: 
+- Storage drivers
+- Volume drivers 
+
+- Docker stores stores data on the local file system
+  - file system: 
+    - /var/lib/docker
+      - aufs
+      - containers
+      - image
+      - volumes
+      
+- Dockers layered architecture: Docker file - image
+  - Layer 1 - Base Ubuntu Layer
+  - Layer 2 - Changes in apt packages
+  - Layer 3 - changes in pip packages
+  - Layer 4 - source code 
+  - Layer 5 - Update Entrypoint
+  
+  Dockerfile 2
+  - Layer 1 - Base Ubuntu Layer <<<<<<<<<------------------ Docker uses previous layers from cache  
+  - Layer 2 - Changes in apt packages <<<<<<<<<<----------- Docker uses previous layers from cache 
+  - Layer 3 - changes in pip packages <<<<<<<<<<----------- Docker uses previous layers from cache 
+  - Layer 4 - source code 
+  - Layer 5 - Update Entrypoint
+  
+  - Layer 1 - Base Ubuntu Layer
+  - Layer 2 - Changes in apt packages
+  - Layer 3 - changes in pip packages
+  - Layer 4 - source code 
+  - Layer 5 - Update Entrypoint
+  - Layer 6 - Container Layer <<<<<<<<<<<<----- When you run docker image, it creates new layer used to store data created
+                                                by the container. Life if this layer, if container is destroyed so is this. 
