@@ -58,3 +58,34 @@ Persist volume / peserve:
   - Bind mounting: Mounts from any location on the docker host 
   - Volume Mounting: mounts a volume from the volumes directorory. 
   
+Who is responsible for all this, maintaing the layered architecture, creating writable layer, 
+moving layers across layers copy and write etc is:
+- STORAGE DRIVERS
+
+- Docker will choose the best storage driver available automatically based on the operating system. 
+ 
+ Storage drivers: help manage storage on containers and images
+ volumes: persist storage must create storage
+          - local is the default volume driver plugin
+          
+- When you run a docker container, you can choose a specific volume driver such as rexray/ebs to provision
+  a volume for amazon ebs. Will create a container and attach volume from the aws cloud, data saved in the cloud.
+  
+  Container storage interface (CSI). 
+  - In the past k8s just used docker for CR, new runtimes come such as RKT/CRI-0 etc. 
+  - Container runtime interface is a standard, how k8s communites with docker for example. 
+  - CSI was created to support many other 3rd party vendors such as Portworkx etc
+    - can write your own drivers to work with kubernetes
+   
+  CSI
+  
+  RPC - When a pod is created and requires a volume, k8s should call the create volume RPC and -
+        pass detail such as volume name, storage driver should implement this RPC and provision new volume
+        on the storag array 
+  Create volume
+  Delete Volume
+  ControllerPublishVolume
+ 
+          
+
+
