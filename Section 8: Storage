@@ -32,3 +32,29 @@ Docker storage:
   - Layer 5 - Update Entrypoint
   - Layer 6 - Container Layer <<<<<<<<<<<<----- When you run docker image, it creates new layer used to store data created
                                                 by the container. Life if this layer, if container is destroyed so is this. 
+
+- Layer 6: =  Read Write
+- Image Layers: = Read Only 
+
+Example:
+app.py in Image layer, docker will automatically create a copy of this file in the container layer, than modifying different level 
+version of the file in the read/write layer. 
+
+- What happens if you get rid of the container?
+  - All the data stored in the container layer, also gets delete, change made to app.py will also get removed.
+  
+Persist volume / peserve:
+- Create Docker volume, 'docker volume create data_volume'
+- Creates a new folder called data_volume
+  - /var/lib/dockeer
+    - volumes
+    - data_volume
+- Than running the docker container, can run this command to  store volume
+  - docker run -v data_volume :/var/lib/mysql mysql 
+  - this will create new container and mount the data volume to the data folder
+  - even if the data is destroyed, the container is still active
+  
+  2 types of mounting:
+  - Bind mounting: Mounts from any location on the docker host 
+  - Volume Mounting: mounts a volume from the volumes directorory. 
+  
