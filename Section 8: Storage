@@ -86,6 +86,7 @@ moving layers across layers copy and write etc is:
   Delete Volume
   ControllerPublishVolume
  
-          
+Volumes:
+- Docker containers are only meant to last for a short period of time
 
 
