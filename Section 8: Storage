@@ -122,9 +122,35 @@ spec:
     
 - kubectl get persistentvolume
   
+Persistence Volume Claims:
+- Admin creates Persistent Volumes
+- Users creates Persistent Volumes Claims
+- Kubernetes binds the PV to PVC based on the request and properties
+- kubernetes tries to find PV that has sufficient capacity has requested by the claim
+- if there are multiple matches for a volume, you can use labels and selectors to bind to correct volume.
+- if no Volumes avaiable, the PVC will remain in a pending state. 
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+   name: myclaim
+spec:
+  accessModes:
+     - ReadWriteOnce
+     
+  resources:
+     request:
+       storage: 500Mi
+       
+- when the PVC is created, k8s looks at the previous PV created, if the 
+  accessModules match 
+  
+- can delete the pvc, however  what happens to the underlying storag claim when the 
+  PVC is deleted, you can choose what needs to happen to the volume, by default
+  it is chosen to be 'retain' 
+
+- recycle / delete
 
 
-- 
-- 
-- 
+
 
