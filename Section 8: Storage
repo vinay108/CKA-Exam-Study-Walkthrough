@@ -88,5 +88,43 @@ moving layers across layers copy and write etc is:
  
 Volumes:
 - Docker containers are only meant to last for a short period of time
+- attach volume to pod, data generated to pod, strored in volume even after pod is deleted
+- use volumemounts field in containers to mount volume name
+  - VolumeMounts:
+  - mountPath: /opt
+    name: data-volume
+    
+ Volumes:
+ - name: data-volume
+   hostPath:
+      path: /data
+      type: Directory
 
+Persistent Volumes:
+- when you have a large cluster for each pod/container, you have to usually
+  configure volume for each, which can get messy. Everytime a change is to be made, 
+  user would have to make changes to each pod manifest. 
+- administrator curve out a large ammount of storage, users than can curve out pieces
+  from it, as required. 
+- a PVC, is a cluster wide pool of storage configured by admin, used by users deploying application on the clusters.
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: pv-vol
+spec:
+  accessModes:
+     - ReadWriteOnce
+  capacity:
+     - storage: 1GI
+  hostPath:
+    path: /tmp/data
+    
+- kubectl get persistentvolume
+  
+
+
+- 
+- 
+- 
 
