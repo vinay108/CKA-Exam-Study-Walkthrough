@@ -253,7 +253,35 @@ Use the command kubectl delete to delete the pvc claim-log-1 and kubectl get to 
 18. What is the state of the PVC now? Deleted
 19. What is the state of the Persistent Volume now? Released
 
+Storage Class:
 
+- Create PVs and PVCs to claim that storage.
+- And use that PVC put claimname in pod definition.
+- static provisioning is having to create disk prior on google cloud for example to creating.
+  everytime application requires storage you usually have to manually provision the disk and then manually create the persistent volume definition file. 
+- dynamic provision - volume get provisions automatically before application gets provisioned  
+  storage class - define a provisioner such as azure storage, allows you to automatically/dynamically provision storage on azure cloud and attach
+  - to pod when a claim is made. 
+- create storage class manifest
+  apiVersion: storage.k8s.io/v1
+  kind: StorageClass
+  metadata: kubernetes.io/gc-pd 
+- now have a storage class and no longer require a PV since we have a storage class which provisions storage
+- PV no longer required since storageclass will automatically create it when storageclass is created
+- For PVC now to use Storageclass, it is now simply mentioned here:
+  kind: PersistentVolumeClaim
+    apiVersion: v1
+    metadata:
+      name: claim-log-1
+    spec:
+      accessModes:
+         - ReadWriteMany
+      storageClass: google-storage
+      resources:
+       requests:
+      storage: 50Mi
+ - StorageClass dynmaically and automatically provisions storage on pod as soon as claim has been made. 
+  
 
 
 
