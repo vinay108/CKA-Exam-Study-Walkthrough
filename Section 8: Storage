@@ -281,6 +281,10 @@ Storage Class:
        requests:
       storage: 50Mi
  - StorageClass dynmaically and automatically provisions storage on pod as soon as claim has been made. 
+ - next time a PVC is created the storage class associated with it, uses the define provisioners to provison new disk wit hrequired size on Google cloud.
+ - still creates PV but its not manually created anymore, it is dynamically 
+ - Creates PV, then binds PVC to that volume
+ 
   
 
 
