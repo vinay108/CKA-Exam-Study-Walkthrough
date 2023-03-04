@@ -2,7 +2,7 @@ Cluster Architecture:
 
 Kubernetes Master Componenets:
 
-- Master node has a list of control plan componenets. 
+- Master node has a list of control plane componenets. 
 ETCD: Stores cluster information and state, the ETCD is a key and value store. 
 
 API Server: Responsible for all orchastration operations with the cluster. 
